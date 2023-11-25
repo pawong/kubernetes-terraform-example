@@ -75,7 +75,7 @@ resource "kubernetes_ingress_v1" "ingress" {
   }
   spec {
     rule {
-      host = "apple.${var.host_url}"
+      host = "apple.${var.domain_name}"
       http {
         path {
           backend {
@@ -90,7 +90,7 @@ resource "kubernetes_ingress_v1" "ingress" {
       }
     }
     rule {
-      host = "banana.${var.host_url}"
+      host = "banana.${var.domain_name}"
       http {
         path {
           backend {

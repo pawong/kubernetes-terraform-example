@@ -88,7 +88,7 @@ resource "kubernetes_ingress_v1" "ingress" {
   }
   spec {
     rule {
-      host = "nginx.${var.host_url}"
+      host = "${var.subdomain_name}.${var.domain_name}"
       http {
         path {
           backend {

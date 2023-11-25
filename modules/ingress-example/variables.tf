@@ -8,7 +8,7 @@ variable "module_name" {
   default     = "ingress-example"
 }
 
-variable "host_url" {
+variable "domain_name" {
   sensitive   = false
   type        = string
   description = "Host URL"

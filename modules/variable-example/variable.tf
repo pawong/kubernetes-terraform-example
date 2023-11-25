@@ -1,11 +1,11 @@
 #---------------------------------------------------------------------------------------------------
-# Host Variables
+# Nginx Example
 #---------------------------------------------------------------------------------------------------
-variable "host_url" {
+variable "module_name" {
   sensitive   = false
   type        = string
-  description = "Host URL"
-  default     = "example.com"
+  description = "Kubernetes Module Name"
+  default     = "variable"
 }
 
 variable "host_data_directory" {

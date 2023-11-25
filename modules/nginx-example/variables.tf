@@ -8,10 +8,17 @@ variable "module_name" {
   default     = "npm"
 }
 
-variable "host_url" {
+variable "domain_name" {
   sensitive   = false
   type        = string
-  description = "Host URL"
+  description = "Domain Name"
+  default     = "example.com"
+}
+
+variable "subdomain_name" {
+  sensitive   = false
+  type        = string
+  description = "Subdomain Name for Ingress"
   default     = "example.com"
 }
 
