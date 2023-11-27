@@ -1,13 +1,13 @@
-resource "kubernetes_namespace" "nginx_namespace" {
+resource "kubernetes_namespace" "variable_namespace" {
   metadata {
     name = var.module_name
   }
 }
 
-resource "kubernetes_deployment_v1" "nginx_deployment" {
+resource "kubernetes_deployment_v1" "variable_deployment" {
   metadata {
     name      = "${var.module_name}-deployment"
-    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+    namespace = kubernetes_namespace.variable_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }

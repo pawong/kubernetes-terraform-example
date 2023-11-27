@@ -5,7 +5,7 @@ variable "module_name" {
   sensitive   = false
   type        = string
   description = "Kubernetes Module Name"
-  default     = "npm"
+  default     = "nginx-example"
 }
 
 variable "domain_name" {

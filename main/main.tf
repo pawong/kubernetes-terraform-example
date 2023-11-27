@@ -27,3 +27,4 @@ module "volume_example" {
 module "variable-example" {
   source              = "../modules/variable-example"
   host_data_directory = "/shares/data"
+}

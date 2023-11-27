@@ -5,7 +5,7 @@ variable "module_name" {
   sensitive   = false
   type        = string
   description = "Kubernetes Module Name"
-  default     = "variable"
+  default     = "variable-example"
 }
 
 variable "host_data_directory" {
