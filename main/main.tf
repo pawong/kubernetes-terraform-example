@@ -24,7 +24,10 @@ module "volume_example" {
   host_data_directory = "/shares/data"
 }
 
-module "variable-example" {
-  source              = "../modules/variable-example"
+module "fastapi_example" {
+  source              = "../modules/fastapi-example"
+  domain_name         = "example.com"
+  subdomain_name      = "fastapi"
   host_data_directory = "/shares/data"
+  registry_host       = "leto"
 }

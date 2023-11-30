@@ -1,11 +1,25 @@
 #---------------------------------------------------------------------------------------------------
-# Nginx Example
+# Fast API
 #---------------------------------------------------------------------------------------------------
 variable "module_name" {
   sensitive   = false
   type        = string
   description = "Kubernetes Module Name"
-  default     = "variable-example"
+  default     = "fastapi"
+}
+
+variable "domain_name" {
+  sensitive   = false
+  type        = string
+  description = "Domain Name"
+  default     = "example.com"
+}
+
+variable "subdomain_name" {
+  sensitive   = false
+  type        = string
+  description = "Subdomain Name for Ingress"
+  default     = "fastapi"
 }
 
 variable "host_data_directory" {
@@ -13,4 +27,11 @@ variable "host_data_directory" {
   type        = string
   description = "Host Data Directory"
   default     = "/shares/data"
+}
+
+variable "registry_host" {
+  sensitive   = false
+  type        = string
+  description = "Registry Host"
+  default     = "localhost"
 }

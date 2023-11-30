@@ -19,7 +19,7 @@ variable "subdomain_name" {
   sensitive   = false
   type        = string
   description = "Subdomain Name for Ingress"
-  default     = "example.com"
+  default     = "subdomain"
 }
 
 variable "host_data_directory" {

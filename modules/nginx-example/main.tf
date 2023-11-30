@@ -31,6 +31,11 @@ resource "kubernetes_deployment_v1" "nginx_deployment" {
           image = "nginx"
           name  = "${var.module_name}-app"
 
+          env {
+            name  = "TEST_ENV"
+            value = "this-is-the-value"
+          }
+
           liveness_probe {
             http_get {
               path = "/"
