@@ -6,23 +6,23 @@ provider "kubernetes" {
 
 ## Examples
 
-module "nginx-example" {
-  source              = "../modules/nginx-example"
-  domain_name         = "example.com"
-  subdomain_name      = "nginx"
-  host_data_directory = "/shares/data"
-}
+# module "nginx-example" {
+#   source              = "../modules/nginx-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "nginx"
+#   host_data_directory = "/shares/data"
+# }
 
-module "ingress_example" {
-  source              = "../modules/ingress-example"
-  domain_name         = "example.com"
-  host_data_directory = "/shares/data"
-}
+# module "ingress_example" {
+#   source              = "../modules/ingress-example"
+#   domain_name         = "example.com"
+#   host_data_directory = "/shares/data"
+# }
 
-module "volume_example" {
-  source              = "../modules/persistent-volume-example"
-  host_data_directory = "/shares/data"
-}
+# module "volume_example" {
+#   source              = "../modules/persistent-volume-example"
+#   host_data_directory = "/shares/data"
+# }
 
 module "fastapi_example" {
   source              = "../modules/fastapi-example"

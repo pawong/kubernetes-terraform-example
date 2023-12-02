@@ -14,22 +14,19 @@ terraform {
 }
 
 provider "docker" {
-  #host = "unix:///var/run/docker.sock"
-  #host = "tcp://${var.registry_host}:2376"
-  host = "ssh://pwong@halleck"
-  #host = "tcp://localhost:2375"
+  host = "unix:///var/run/docker.sock"
 }
 
-resource "docker_image" "fastapi_image" {
-  name = "${var.module_name}-image"
+resource "docker_image" "fastapi_example_image" {
+  name = "${var.module_name}/${var.module_name}-example-image"
   build {
-    context = "./backend/"
-    tag     = ["${var.module_name}-image:latest"]
+    context = "${path.module}/backend"
+    tag     = ["${var.module_name}/${var.module_name}-example-image:latest"]
     build_arg = {
-      name : "${var.module_name}-image"
+      name : "${var.module_name}/${var.module_name}-example-image"
     }
     label = {
-      author : "somebody"
+      author : "me@nowhere.com"
     }
   }
 }
@@ -57,7 +54,7 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
       }
       spec {
         container {
-          image             = docker_image.fastapi_image.name
+          image             = docker_image.fastapi_example_image.name
           name              = "${var.module_name}-container"
           image_pull_policy = "IfNotPresent" #"Never"
 
