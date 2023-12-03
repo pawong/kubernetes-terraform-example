@@ -12,5 +12,7 @@
 
 ### Ingress
 
-- apple.example.com
-- banana.example.com
+- ingress.example.com/apple
+- ingress.example.com/banana
+
+Adding a default backend to the ingress will force anythin like `ingress.example.com` to that service.

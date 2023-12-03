@@ -70,14 +70,23 @@ resource "kubernetes_service_v1" "banana_service" {
 
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
-    name      = "example-ingress"
+    name      = "ingress-example"
     namespace = kubernetes_namespace.ingress_example_namespace.metadata.0.name
   }
   spec {
+    # default_backend {
+    #   service {
+    #     name = kubernetes_service_v1.apple_service.metadata.0.name
+    #     port {
+    #       number = 5678
+    #     }
+    #   }
+    # }
     rule {
-      host = "apple.${var.domain_name}"
+      host = "ingress.${var.domain_name}"
       http {
         path {
+          path = "/apple"
           backend {
             service {
               name = kubernetes_service_v1.apple_service.metadata.0.name
@@ -87,12 +96,8 @@ resource "kubernetes_ingress_v1" "ingress" {
             }
           }
         }
-      }
-    }
-    rule {
-      host = "banana.${var.domain_name}"
-      http {
         path {
+          path = "/banana"
           backend {
             service {
               name = kubernetes_service_v1.banana_service.metadata.0.name

@@ -2,6 +2,16 @@
 
 Builds and deploys a simple FastAPI example, includes service and ingress.
 
+Using local Docker for building.
+
+```javascript
+provider "docker" {
+  host = "unix:///var/run/docker.sock"
+}
+```
+
+Image build example.
+
 ```javascript
 resource "docker_image" "fastapi_example_image" {
   name = "${var.module_name}/${var.module_name}-example-image"
