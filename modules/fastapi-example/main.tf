@@ -18,12 +18,12 @@ provider "docker" {
 }
 
 resource "docker_image" "fastapi_example_image" {
-  name = "${var.module_name}/${var.module_name}-example-image"
+  name = "${var.module_name}-image"
   build {
     context = "${path.module}/backend"
-    tag     = ["${var.module_name}/${var.module_name}-example-image:latest"]
+    tag     = ["${var.module_name}-image:latest"]
     build_arg = {
-      name : "${var.module_name}/${var.module_name}-example-image"
+      name : "${var.module_name}-image"
     }
     label = {
       author : "me@nowhere.com"
@@ -54,7 +54,7 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
       }
       spec {
         container {
-          image             = docker_image.fastapi_example_image.name
+          image             = "${docker_image.fastapi_example_image.name}:latest"
           name              = "${var.module_name}-container"
           image_pull_policy = "IfNotPresent" #"Never"
 

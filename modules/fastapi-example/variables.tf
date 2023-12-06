@@ -5,7 +5,7 @@ variable "module_name" {
   sensitive   = false
   type        = string
   description = "Kubernetes Module Name"
-  default     = "fastapi"
+  default     = "fastapi-example"
 }
 
 variable "domain_name" {
@@ -27,11 +27,4 @@ variable "host_data_directory" {
   type        = string
   description = "Host Data Directory"
   default     = "/shares/data"
-}
-
-variable "registry_host" {
-  sensitive   = false
-  type        = string
-  description = "Registry Host"
-  default     = "localhost"
 }
