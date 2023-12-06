@@ -24,7 +24,6 @@ module "fastapi_example" {
   domain_name         = "example.com"
   subdomain_name      = "fastapi"
   host_data_directory = "/shares/data"
-  registry_host       = "leto"
 }
 
 module "debug_pod" {
