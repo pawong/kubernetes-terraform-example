@@ -10,6 +10,7 @@ Add `example.com` to your host file.
 192.168.10.xx   example.com
 192.168.10.xx   ingress.example.com
 192.168.10.xx   nginx.example.com
+192.168.10.xx   fastapi.example.com
 ```
 
 ## Connect to a pod

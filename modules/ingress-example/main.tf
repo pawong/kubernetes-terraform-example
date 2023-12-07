@@ -83,7 +83,7 @@ resource "kubernetes_ingress_v1" "ingress" {
     #   }
     # }
     rule {
-      host = "ingress.${var.domain_name}"
+      host = "${var.subdomain_name}.${var.domain_name}"
       http {
         path {
           path = "/apple"
