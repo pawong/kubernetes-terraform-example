@@ -31,3 +31,8 @@ module "debug_pod" {
   source              = "../modules/debug-pod"
   host_data_directory = "/shares/data"
 }
+
+module "cronjobs" {
+  source      = "../modules/cronjobs"
+  module_name = "cronjobs"
+}
