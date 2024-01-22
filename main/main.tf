@@ -20,6 +20,13 @@ module "ingress_example" {
   host_data_directory = "/shares/data"
 }
 
+module "express_example" {
+  source              = "../modules/express-example"
+  domain_name         = "example.com"
+  subdomain_name      = "express"
+  host_data_directory = "/shares/data"
+}
+
 module "fastapi_example" {
   source              = "../modules/fastapi-example"
   domain_name         = "example.com"
