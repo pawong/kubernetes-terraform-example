@@ -24,16 +24,58 @@ answers = [
   "Very doubtful",
 ]
 
-/* GET 8ball answer. */
+/**
+ * @swagger
+ * /8ball:
+ *   get:
+ *     tags:
+ *       - 8 Ball
+ *     produces:
+ *       - text
+ *     description:  Get Magic 8 Ball's answer
+ */
 router.get('/', function(req, res, next) {
   res.send(answers[Math.floor(Math.random() * answers.length)]);
 });
 
-/* POST 8ball answer.
-   req like {
-    "question": "Will I ever find a job?"
-  }
-*/
+/**
+ * @swagger
+ * /8ball:
+ *   post:
+ *     description:  Post question to Magic 8 Ball
+ *     tags:
+ *       - 8 Ball
+ *     produces:
+ *       - application/json
+ *     requestBody:
+ *       description: "Question to ask the Magic 8 Ball"
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - question
+ *             properties:
+ *               question:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Magic 8 Ball, question and answer.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 question:
+ *                   type: string
+ *                   description: The question asked.
+ *                   example: "Will I win the lottery?"
+ *                 answer:
+ *                   type: string
+ *                   description: The Magic 8 Ball's answer.
+ *                   example: It is certain
+ */
 router.post('/', function(req, res) {
   res.send({
     "question": req.body["question"],

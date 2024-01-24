@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const swaggerJsdoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var eballRouter = require('./routes/eball');
@@ -23,6 +26,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/8ball', eballRouter);
+
+// swagger
+const options = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Express Example',
+      version: '1.0.0',
+      description: 'Express example on Kubernetes',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+      },
+      {
+        url: 'http://express.example.com'
+      }
+    ],
+  },
+  apis: [path.join(process.cwd(), '/routes/*.js')]
+}
+const specs = swaggerJsdoc(options);
+app.use(
+  "/docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
