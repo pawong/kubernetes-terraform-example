@@ -20,6 +20,12 @@ Start
 % DEBUG=backend:* npm start
 ```
 
+Run with NodeMon
+
+```
+% npm run dev
+```
+
 ### Terraform Deploy
 
 Using local Docker for building.

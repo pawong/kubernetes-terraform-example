@@ -1,12 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/**
- * @swagger
- * /:
- *   get:
- *     description:  Home page
- */
+/* GET: Default route */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });

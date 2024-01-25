@@ -36,14 +36,14 @@ const options = {
       version: '1.0.0',
       description: 'Express example on Kubernetes',
     },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-      },
-      {
-        url: 'http://express.example.com'
-      }
-    ],
+    // servers: [
+    //   {
+    //     url: 'http://localhost:3000',
+    //   },
+    //   {
+    //     url: 'http://express.example.com'
+    //   }
+    // ],
   },
   apis: [path.join(process.cwd(), '/routes/*.js')]
 }

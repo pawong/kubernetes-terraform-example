@@ -28,11 +28,19 @@ answers = [
  * @swagger
  * /8ball:
  *   get:
+ *     summary: Get answer
+ *     description:  Get Magic 8 Ball's answer
  *     tags:
  *       - 8 Ball
  *     produces:
- *       - text
- *     description:  Get Magic 8 Ball's answer
+ *       - string
+ *     responses:
+ *       200:
+ *         description: Bare answer.
+ *         content:
+ *           string:
+ *             schema:
+ *               type: string
  */
 router.get('/', function(req, res, next) {
   res.send(answers[Math.floor(Math.random() * answers.length)]);
@@ -42,6 +50,7 @@ router.get('/', function(req, res, next) {
  * @swagger
  * /8ball:
  *   post:
+ *     summary: Post question and get answer
  *     description:  Post question to Magic 8 Ball
  *     tags:
  *       - 8 Ball
