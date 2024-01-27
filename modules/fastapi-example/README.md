@@ -19,10 +19,11 @@ This is the documentation, <https://microk8s.io/docs/registry-images>.
 TL;DR
 
 ```bash
-% docker save {image_name} > {image_name}.tar
-% scp {image_name}.tar {username@hostname}:
+% docker build . -t library/fastapi-example-image:latest --platform linux/arm64 # check your deployment platform
+% docker save library/fastapi-example-image:latest > fastapi-example-image.tar
+% scp fastapi-example-image.tar {username@hostname}:
 # on host
-% microk8s ctr image import {image_name}.tar
+% microk8s ctr image import fastapi-example-image.tar
 ```
 
 Then try to deploy again.

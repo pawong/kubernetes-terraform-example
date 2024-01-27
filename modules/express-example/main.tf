@@ -56,12 +56,12 @@ resource "kubernetes_deployment_v1" "express_deployment" {
         container {
           image             = "${docker_image.express_example_image.name}:latest"
           name              = "${var.module_name}-container"
-          image_pull_policy = "IfNotPresent" #"Never"
+          image_pull_policy = "Never"
 
           liveness_probe {
             http_get {
-              path = "/"
-              port = 81
+              path = "/alive"
+              port = 3000
               http_header {
                 name  = "X-Custom-Header"
                 value = "Awesome"

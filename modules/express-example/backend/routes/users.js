@@ -5,15 +5,6 @@ var router = express.Router();
  * @swagger
  * /users:
  *   get:
- *     description:  Users Listing
- *     tags:
- *       - users
- */
-
-/**
- * @swagger
- * /users:
- *   get:
  *     summary: Get list of Users
  *     description:  Users Listing
  *     tags:

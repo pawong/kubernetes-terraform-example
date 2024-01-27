@@ -45,13 +45,13 @@ const options = {
     //   }
     // ],
   },
-  apis: [path.join(process.cwd(), '/routes/*.js')]
+  apis: [path.join(process.cwd(), '/routes/*.js')],
 }
 const specs = swaggerJsdoc(options);
 app.use(
   "/docs",
   swaggerUi.serve,
-  swaggerUi.setup(specs, { explorer: true })
+  swaggerUi.setup(specs, {customCss: '.swagger-ui .topbar { display: none }'})
 );
 
 // catch 404 and forward to error handler
