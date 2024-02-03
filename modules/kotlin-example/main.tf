@@ -60,7 +60,7 @@ resource "kubernetes_deployment_v1" "kotlin_deployment" {
 
           liveness_probe {
             http_get {
-              path = "/"
+              path = "/alive"
               port = 8080
               http_header {
                 name  = "X-Custom-Header"
@@ -106,7 +106,7 @@ resource "kubernetes_ingress_v1" "ingress" {
             service {
               name = kubernetes_service_v1.kotlin_example_service.metadata.0.name
               port {
-                number = 3000
+                number = 8080
               }
             }
           }

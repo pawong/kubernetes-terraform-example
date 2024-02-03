@@ -22,6 +22,22 @@ paths:
               examples:
                 Example#1:
                   value: "Hello World!"
+  /alive:
+    get:
+      summary: Get keep-alive
+      description: "Get the keep-alive for the container"
+      tags:
+      - default
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "I'm alive!"
   /8ball:
     get:
       summary: Get answer
