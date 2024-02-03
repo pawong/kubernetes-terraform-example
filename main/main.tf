@@ -20,6 +20,13 @@ module "ingress_example" {
   host_data_directory = "/shares/data"
 }
 
+module "kotlin_example" {
+  source              = "../modules/kotlin-example"
+  domain_name         = "example.com"
+  subdomain_name      = "kotlin"
+  host_data_directory = "/shares/data"
+}
+
 module "express_example" {
   source              = "../modules/express-example"
   domain_name         = "example.com"

@@ -1,4 +1,4 @@
-# fastapi-example
+# FastAPI Example
 
 Builds and deploys a simple FastAPI example, includes service and ingress.
 

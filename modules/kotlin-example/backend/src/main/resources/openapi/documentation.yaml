@@ -1,0 +1,80 @@
+openapi: "3.0.3"
+info:
+  title: "Kotlin Example API"
+  description: "An example API in Kotlin/Ktor"
+  version: "1.0.0"
+servers:
+  - url: "http://0.0.0.0:8080/"
+paths:
+  /:
+    get:
+      summary: Get default
+      description: "Get the default route for the API"
+      tags:
+      - default
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Hello World!"
+  /8ball:
+    get:
+      summary: Get answer
+      description:  Get Magic 8 Ball's answer
+      tags:
+        - 8 Ball
+      produces:
+        - string
+      responses:
+        200:
+          description: Bare answer.
+          content:
+            string:
+              schema:
+                type: string
+              examples:
+                Example#1:
+                  value: "Don't count on it"
+    post:
+      summary: Post question and get answer
+      description:  Post question to Magic 8 Ball
+      tags:
+        - 8 Ball
+      produces:
+        - application/json
+      requestBody:
+        description: "Question to ask the Magic 8 Ball"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - question
+              properties:
+                question:
+                  type: string
+      responses:
+        200:
+          description: Magic 8 Ball, question and answer.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  question:
+                    type: string
+                    description: The question asked.
+                    example: "Will I win the lottery?"
+                  answer:
+                    type: string
+                    description: The Magic 8 Ball's answer.
+                    example: It is certain
+
+components:
+ schemas:

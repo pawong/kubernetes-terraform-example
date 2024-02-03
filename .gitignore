@@ -98,3 +98,37 @@ typings/
 
 # next.js build output
 .next
+
+# ktor and kotlin
+build
+.gradle
+.gradletasknamecache
+
+out
+*.iml
+.vscode
+
+*.versionsBackup
+*.releaseBackup
+release.properties
+local.properties
+*.swp
+
+.video
+.attach_pid*
+apidoc
+
+
+bin/
+.settings
+.project
+.classpath
+.konan
+
+.DS_Store
+
+hs_err_pid*.log
+
+gradle-user-home
+
+.fleet
