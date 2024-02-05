@@ -1,8 +1,20 @@
 import random
+import json
 
 from typing import Union
 
 from fastapi import APIRouter, HTTPException
+
+from pydantic import BaseModel
+
+
+class EightBallRequest(BaseModel):
+    question: str
+
+
+class EightBall(EightBallRequest):
+    answer: str
+
 
 router = APIRouter()
 
@@ -30,16 +42,16 @@ answers = [
 ]
 
 
-@router.get("/8ball")
+@router.get("")
 def get_answer_only():
     """8ball get answer only endpoint"""
     return answers[random.randint(0, len(answers) - 1)]
 
 
-@router.post("/8ball")
-def get_answer(req):
+@router.post("", response_model=EightBall)
+def get_answer(question_in: EightBallRequest):
     """8ball post answer endpoint"""
-    question = req.question
+    question = question_in.question
     if question is None or not len(question):
         raise HTTPException(
             status_code=400,
