@@ -6,7 +6,7 @@ provider "kubernetes" {
 
 ## Examples
 
-module "nginx-example" {
+module "nginx_example" {
   source              = "../modules/nginx-example"
   domain_name         = "example.com"
   subdomain_name      = "nginx"
