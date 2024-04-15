@@ -1,10 +1,15 @@
-
-
 provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
 ## Examples
+
+module "postgresql" {
+  source               = "../modules/postgresql"
+  kubernetes_namespace = "postgresql"
+  postgresql_password  = "changeme"
+}
+
 
 module "nginx_example" {
   source              = "../modules/nginx-example"

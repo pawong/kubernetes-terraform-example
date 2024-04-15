@@ -40,3 +40,14 @@ resource "kubernetes_persistent_volume_claim_v1" "pv_pvc" {
     volume_name = kubernetes_persistent_volume_v1.pv_pv.metadata.0.name
   }
 }
+
+resource "kubernetes_config_map_v1" "config_map" {
+  metadata {
+    name = "${var.kubernetes_namespace}-config-map"
+  }
+  data = {
+    POSTGRES_DB       = "ps_db"
+    POSTGRES_USER     = "ps_user"
+    POSTGRES_PASSWORD = "handang0"
+  }
+}
