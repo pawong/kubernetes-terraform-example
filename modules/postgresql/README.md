@@ -1,7 +1,15 @@
 # PostgreSQL
 
-### Client
+## Client
+
+### Direct
 
 ```bash
-% kubectl exec -it <postgres pod> -- psql -h localhost -U postgres --password -p 5432 postgres
+% k exec -it postgresql-deployment-6487bfc987-v2vwf -- psql -U postgres
+```
+
+### Pod
+
+```bash
+% kubectl run postgresql-postgresql-client --rm --tty -i --restart='Never' --namespace default --image bitnami/postgresql --env="PGPASSWORD=changeme" --command -- psql --host postgresql-service.postgresql.svc.cluster.local -U postgres
 ```
