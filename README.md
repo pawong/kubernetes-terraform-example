@@ -13,6 +13,7 @@ Add `example.com` to your host file.
 192.168.10.xx   fastapi.example.com
 192.168.10.xx   express.example.com
 192.168.10.xx   kotlin.example.com
+192.168.10.xx   go.example.com
 ```
 
 ## Connect to a pod
@@ -27,4 +28,11 @@ Run manually:
 
 ```bash
 % pre-commit run -a
+```
+
+## Deploy
+
+```bash
+% cd main
+% tf apply
 ```
