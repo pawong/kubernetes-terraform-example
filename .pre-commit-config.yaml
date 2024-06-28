@@ -4,7 +4,7 @@ repos:
   hooks:
     - id: terraform_fmt
     - id: terraform_docs
-    # - id: terraform_checkov
-    #   args:
-    #     - --args=--quiet
-    #     - --args=--skip-check CKV2_AWS_8
+    - id: terraform_checkov
+      args:
+        - --args=--quiet
+        - --args=--skip-check CKV2_AWS_8
