@@ -20,3 +20,11 @@ Add `example.com` to your host file.
 ```bash
 % kubectl -n <namespace> exec --stdin --tty <pod_name> -- /bin/bash
 ```
+
+## Pre-Commits
+
+Run manually:
+
+```bash
+% pre-commit run -a
+```

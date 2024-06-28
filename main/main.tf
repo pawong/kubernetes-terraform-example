@@ -46,6 +46,13 @@ module "fastapi_example" {
   host_data_directory = "/shares/data"
 }
 
+module "go_example" {
+  source              = "../modules/go-example"
+  domain_name         = "example.com"
+  subdomain_name      = "go"
+  host_data_directory = "/shares/data"
+}
+
 module "debug_pod" {
   source              = "../modules/debug-pod"
   host_data_directory = "/shares/data"
