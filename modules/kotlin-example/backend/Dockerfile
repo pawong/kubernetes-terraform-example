@@ -1,5 +1,5 @@
 ARG VERSION=21
-FROM gradle:latest as BUILD
+FROM gradle:latest AS build
 
 COPY . /backend
 WORKDIR /backend
