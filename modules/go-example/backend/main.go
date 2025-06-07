@@ -31,7 +31,7 @@ func keepAlive(c *gin.Context) {
 
 func health(c *gin.Context) {
 	hostname, _ := os.Hostname()
-	c.IndentedJSON(http.StatusOK, gin.H{"GIT_HASH": os.Getenv("MY_VARIABLE"), "hostname": hostname, "server_time": time.Now().Unix()})
+	c.IndentedJSON(http.StatusOK, gin.H{"git_hash": os.Getenv("GIT_HASH"), "hostname": hostname, "server_time": time.Now().Unix()})
 }
 
 var answers = [...]string{

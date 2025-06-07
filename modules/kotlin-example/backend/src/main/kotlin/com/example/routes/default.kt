@@ -4,6 +4,9 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
+import java.net.InetAddress
+import java.time.Instant
+
 fun Application.defaultRouting() {
     routing {
         get("/") {
@@ -13,7 +16,10 @@ fun Application.defaultRouting() {
             call.respondText("I'm alive!")
         }
         get("/health") {
-            call.respond("OK")
+            val gitHash: String = System.getenv("GIT_HASH")
+            val hostname: String = InetAddress.getLocalHost().hostName
+            val serverTime: Long = Instant.now().epochSecond
+            call.respond("{\"git_hash\": \"${gitHash}\", \"hostname\": \"${hostname}\", \"server_time\": ${serverTime}}")
         }
     }
 }
