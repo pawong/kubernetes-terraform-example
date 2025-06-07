@@ -19,7 +19,7 @@ This is the documentation, <https://microk8s.io/docs/registry-images>.
 TL;DR
 
 ```bash
-% docker build -t library/fastapi-example-image:latest --platform linux/arm64 --build-arg GIT_COMMIT=$(git rev-parse --short HEAD) . # check your deployment platform
+% docker build -t library/fastapi-example-image:latest --platform linux/arm64 --build-arg GIT_HASH=$(git rev-parse --short HEAD) . # check your deployment platform
 % docker save library/fastapi-example-image:latest > fastapi-example-image.tar
 % scp fastapi-example-image.tar {username@hostname}:
 # on host

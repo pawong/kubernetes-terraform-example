@@ -14,7 +14,7 @@ resource "docker_image" "express_example_image" {
     context = "${path.module}/backend"
     tag     = ["${var.module_name}-image:latest"]
     build_args = {
-      GIT_COMMIT : var.git_commit
+      GIT_HASH : var.GIT_HASH
     }
     label = {
       author : "me@example.com"
@@ -51,7 +51,7 @@ resource "kubernetes_deployment_v1" "express_deployment" {
 
           liveness_probe {
             http_get {
-              path = "/alive"
+              path = "/health"
               port = 3000
               http_header {
                 name  = "X-Custom-Header"

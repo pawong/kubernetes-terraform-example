@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+	"time"
 	"math/rand/v2"
 	"net/http"
 
@@ -11,6 +13,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/", readRoot)
 	router.GET("/keepalive", keepAlive)
+	router.GET("/health", health)
 
 	router.GET("/8ball", getAnwserOnly)
 	router.POST("/8ball", getAnwser)
@@ -24,6 +27,11 @@ func readRoot(c *gin.Context) {
 
 func keepAlive(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json; charset=utf-8", []byte("I'm alive!"))
+}
+
+func health(c *gin.Context) {
+	hostname, _ := os.Hostname()
+	c.IndentedJSON(http.StatusOK, gin.H{"GIT_HASH": os.Getenv("MY_VARIABLE"), "hostname": hostname, "server_time": time.Now().Unix()})
 }
 
 var answers = [...]string{

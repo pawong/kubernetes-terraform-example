@@ -1,11 +1,11 @@
 FROM python:3.12-bookworm
-ARG GIT_COMMIT
+ARG GIT_HASH
 
 COPY ./ /backend/
 WORKDIR /backend/
 
-ENV GIT_COMMIT=${GIT_COMMIT}
-RUN echo ${GIT_COMMIT} > REVISION
+ENV GIT_HASH=${GIT_HASH}
+RUN echo ${GIT_HASH} > REVISION
 
 RUN apt update
 RUN pip3 install poetry

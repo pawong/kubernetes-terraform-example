@@ -5,7 +5,7 @@ provider "kubernetes" {
 ## Data
 data "external" "git" {
   program = ["sh", "-c", <<-EOSCRIPT
-    echo '{"git_commit": "'"$(git rev-parse --short HEAD)"'"}'
+    echo '{"GIT_HASH": "'"$(git rev-parse --short HEAD)"'"}'
   EOSCRIPT
   ]
 }
@@ -37,7 +37,7 @@ module "kotlin_example" {
   domain_name         = "example.com"
   subdomain_name      = "kotlin"
   host_data_directory = "/shares/data"
-  git_commit          = data.external.git.result.git_commit
+  GIT_HASH            = data.external.git.result.GIT_HASH
 }
 
 module "express_example" {
@@ -45,7 +45,7 @@ module "express_example" {
   domain_name         = "example.com"
   subdomain_name      = "express"
   host_data_directory = "/shares/data"
-  git_commit          = data.external.git.result.git_commit
+  GIT_HASH            = data.external.git.result.GIT_HASH
 }
 
 module "fastapi_example" {
@@ -53,7 +53,7 @@ module "fastapi_example" {
   domain_name         = "example.com"
   subdomain_name      = "fastapi"
   host_data_directory = "/shares/data"
-  git_commit          = data.external.git.result.git_commit
+  GIT_HASH            = data.external.git.result.GIT_HASH
 }
 
 module "go_example" {
@@ -61,7 +61,7 @@ module "go_example" {
   domain_name         = "example.com"
   subdomain_name      = "go"
   host_data_directory = "/shares/data"
-  git_commit          = data.external.git.result.git_commit
+  GIT_HASH            = data.external.git.result.GIT_HASH
 }
 
 module "debug_pod" {

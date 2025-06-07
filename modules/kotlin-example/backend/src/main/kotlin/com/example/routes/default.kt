@@ -12,5 +12,8 @@ fun Application.defaultRouting() {
         get("/alive") {
             call.respondText("I'm alive!")
         }
+        get("/health") {
+            call.respond("OK")
+        }
     }
 }

@@ -29,7 +29,7 @@ variable "host_data_directory" {
   default     = "/shares/data"
 }
 
-variable "git_commit" {
+variable "GIT_HASH" {
   sensitive   = false
   type        = string
   description = "Git commit hash"

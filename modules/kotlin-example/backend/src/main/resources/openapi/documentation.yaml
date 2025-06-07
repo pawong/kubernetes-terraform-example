@@ -39,6 +39,22 @@ paths:
               examples:
                 Example#1:
                   value: "I'm alive!"
+  /health:
+    get:
+      summary: Get health
+      description: "Get the heath for the container"
+      tags:
+      - default
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "OK"
   /8ball:
     get:
       summary: Get answer

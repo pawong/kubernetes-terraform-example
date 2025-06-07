@@ -22,7 +22,7 @@ TL;DR
 
 ```bash
 # check your deployment platform
-% docker build . -t library/fastapi-example-image:latest --platform linux/arm64 --build-arg GIT_COMMIT=$(git rev-parse --short HEAD)
+% docker build . -t library/fastapi-example-image:latest --platform linux/arm64 --build-arg GIT_HASH=$(git rev-parse --short HEAD)
 % docker save library/kotlin-example-image:latest > kotlin-example-image.tar
 % scp kotlin-example-image.tar {username@hostname}:
 # on host
