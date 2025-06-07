@@ -4,15 +4,6 @@ resource "kubernetes_namespace" "go_namespace" {
   }
 }
 
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "3.0.2"
-    }
-  }
-}
-
 provider "docker" {
   host = "unix:///var/run/docker.sock"
 }
@@ -22,11 +13,11 @@ resource "docker_image" "go_example_image" {
   build {
     context = "${path.module}/backend"
     tag     = ["${var.module_name}-image:latest"]
-    build_arg = {
-      name : "${var.module_name}-image"
+    build_args = {
+      GIT_COMMIT : var.git_commit
     }
     label = {
-      author : "me@nowhere.com"
+      author : "me@example.com"
     }
   }
 }

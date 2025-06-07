@@ -2,6 +2,14 @@ provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
+## Data
+data "external" "git" {
+  program = ["sh", "-c", <<-EOSCRIPT
+    echo '{"git_commit": "'"$(git rev-parse --short HEAD)"'"}'
+  EOSCRIPT
+  ]
+}
+
 ## Examples
 
 module "postgresql" {
@@ -9,7 +17,6 @@ module "postgresql" {
   kubernetes_namespace = "postgresql"
   postgresql_password  = "changeme"
 }
-
 
 module "nginx_example" {
   source              = "../modules/nginx-example"
@@ -30,6 +37,7 @@ module "kotlin_example" {
   domain_name         = "example.com"
   subdomain_name      = "kotlin"
   host_data_directory = "/shares/data"
+  git_commit          = data.external.git.result.git_commit
 }
 
 module "express_example" {
@@ -37,6 +45,7 @@ module "express_example" {
   domain_name         = "example.com"
   subdomain_name      = "express"
   host_data_directory = "/shares/data"
+  git_commit          = data.external.git.result.git_commit
 }
 
 module "fastapi_example" {
@@ -44,6 +53,7 @@ module "fastapi_example" {
   domain_name         = "example.com"
   subdomain_name      = "fastapi"
   host_data_directory = "/shares/data"
+  git_commit          = data.external.git.result.git_commit
 }
 
 module "go_example" {
@@ -51,6 +61,7 @@ module "go_example" {
   domain_name         = "example.com"
   subdomain_name      = "go"
   host_data_directory = "/shares/data"
+  git_commit          = data.external.git.result.git_commit
 }
 
 module "debug_pod" {

@@ -1,10 +1,11 @@
 FROM golang:1.22.2
-ENV GIT_REVISION=$GIT_COMMIT
+ARG GIT_COMMIT
 
 COPY ./ /backend/
-
 WORKDIR /backend/
-RUN echo "${GIT_REVISION}" >> REVISION
+
+ENV GIT_COMMIT=${GIT_COMMIT}
+RUN echo ${GIT_COMMIT} > REVISION
 
 RUN go build -o main main.go
 

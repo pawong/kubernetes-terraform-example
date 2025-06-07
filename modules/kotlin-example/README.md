@@ -4,7 +4,6 @@ Builds and deploys a simple Kotlin Example, includes service and ingress.
 
 For a quick start, backend servers can use [**Ktor Project Generator**](https://start.ktor.io/#/settings?name=kotlin-example&website=example.com&artifact=com.example.kotlin-example&kotlinVersion=1.9.22&ktorVersion=2.3.7&buildSystem=GRADLE_KTS&engine=NETTY&configurationIn=CODE&addSampleCode=true&plugins=).
 
-
 Using local Docker for building.
 
 ```javascript
@@ -23,7 +22,7 @@ TL;DR
 
 ```bash
 # check your deployment platform
-% docker build . -t library/kotlin-example-image:latest --platform linux/arm64
+% docker build . -t library/fastapi-example-image:latest --platform linux/arm64 --build-arg GIT_COMMIT=$(git rev-parse --short HEAD)
 % docker save library/kotlin-example-image:latest > kotlin-example-image.tar
 % scp kotlin-example-image.tar {username@hostname}:
 # on host
