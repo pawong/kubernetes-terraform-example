@@ -17,11 +17,11 @@ fun Application.defaultRouting() {
             val serverTime: Long = Instant.now().epochSecond
             call.respond(
                     """{
-    \"git_hash\": \"${gitHash}\",
-    \"hostname\": \"${hostname}\",
-    \"ip_address\": \"${ip_address}\",
-    \"server_time\": ${serverTime}
-                    }"""
+    "git_hash": "${gitHash}",
+    "hostname": "${hostname}",
+    "ip_address": "${ip_address}",
+    "server_time": ${serverTime}
+}"""
             )
         }
     }
