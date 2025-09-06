@@ -1,10 +1,11 @@
 package main
 
 import (
+	"math/rand/v2"
+	"net"
+	"net/http"
 	"os"
 	"time"
-	"math/rand/v2"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,7 +32,16 @@ func keepAlive(c *gin.Context) {
 
 func health(c *gin.Context) {
 	hostname, _ := os.Hostname()
-	c.IndentedJSON(http.StatusOK, gin.H{"git_hash": os.Getenv("GIT_HASH"), "hostname": hostname, "server_time": time.Now().Unix()})
+	ip, _ := net.LookupIP(hostname)
+	c.IndentedJSON(
+		http.StatusOK,
+		gin.H{
+			"git_hash":    os.Getenv("GIT_HASH"),
+			"hostname":    hostname,
+			"ip_address":  ip[0],
+			"server_time": time.Now().Unix(),
+		},
+	)
 }
 
 var answers = [...]string{

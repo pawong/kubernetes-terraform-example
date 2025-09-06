@@ -1,3 +1,4 @@
+import socket
 import os
 import time
 
@@ -20,13 +21,16 @@ def read_root():
 def keep_alive():
     return "I'm alive!"
 
+
 @api.get("/health")
 def health():
     return {
-        "git_hash": os.environ['GIT_HASH'],
+        "git_hash": os.environ["GIT_HASH"],
         "hostname": os.uname().nodename,
-        "server_time": int(time.time())
+        "ip_address": socket.gethostbyname(socket.gethostname()),
+        "server_time": int(time.time()),
     }
+
 
 @api.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):

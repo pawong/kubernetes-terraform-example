@@ -45,7 +45,7 @@ This is the documentation, <https://microk8s.io/docs/registry-images>.
 TL;DR
 
 ```bash
-% docker build . -t library/express-example-image:latest --platform linux/arm64 # check your deployment platform
+% docker build -t library/express-example-image:latest --platform linux/arm64 --build-arg GIT_HASH=$(git rev-parse --short HEAD) . # check your deployment platform
 % docker save library/express-example-image:latest > express-example-image.tar
 % scp express-example-image.tar {username@hostname}:
 # on host

@@ -47,7 +47,18 @@ router.get('/alive', function(req, res, next) {
  *               type: string
  */
 router.get('/health', function(req, res, next) {
-  res.send('OK')
+  const os = require('os');
+  var ip = require("ip");
+  const ip_address = ip.address()
+  const serverHostname = os.hostname();
+  const git_hash = process.env.GIT_HASH;
+  const epochSeconds = Math.floor(Date.now() / 1000);
+  res.send({
+    "git_hash": git_hash,
+    "hostname": serverHostname,
+    "ip_address": ip_address,
+    "server_time": epochSeconds,
+  })
 });
 
 

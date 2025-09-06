@@ -1,12 +1,11 @@
-FROM node:18-alpine as builder
-ARG GIT_HASH
-ENV NODE_ENV="production"
+FROM node:18-alpine AS builder
 
 COPY . /backend
 WORKDIR /backend
 
 RUN npm install
 FROM node:18-alpine
+ARG GIT_HASH
 
 ENV NODE_ENV="production"
 ENV GIT_HASH=${GIT_HASH}
