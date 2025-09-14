@@ -1,15 +1,41 @@
-FROM golang:1.22.2
+FROM golang:1.25.1-alpine AS builder
+
+WORKDIR /backend
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN go build -o main main.go
+
+FROM alpine:3.20
+
 ARG GIT_HASH
-
-COPY ./ /backend/
-WORKDIR /backend/
-
 ENV GIT_HASH=${GIT_HASH}
 RUN echo ${GIT_HASH} > REVISION
 
-RUN go build -o main main.go
+ENV APP_USER=worker
+ENV APP_GROUP=worker
+ENV APP_UID=1000
+ENV APP_GID=1000
+
+RUN addgroup -g ${APP_GID} ${APP_GROUP} \
+    && adduser -u ${APP_UID} -G ${APP_GROUP} -S ${APP_USER}
+
+RUN apk update && apk add curl
 
 ENV HOST=0.0.0.0
 ENV PORT=8080
 
+WORKDIR /backend
+COPY --from=builder /backend/main .
+RUN chown -R ${APP_USER}:${APP_GROUP} /backend
+
+USER ${APP_USER}
+
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD curl -f http://localhost/health || exit 1
+
 CMD ["./main"]
+
