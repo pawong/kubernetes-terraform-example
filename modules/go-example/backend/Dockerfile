@@ -37,5 +37,7 @@ USER ${APP_USER}
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
     CMD curl -f http://localhost/health || exit 1
 
+EXPOSE 8080
+
 CMD ["./main"]
 
