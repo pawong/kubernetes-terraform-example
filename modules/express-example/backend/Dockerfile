@@ -18,8 +18,8 @@ ENV APP_GROUP=worker
 ENV APP_UID=1001
 ENV APP_GID=1001
 
-RUN addgroup ${APP_GROUP} && \
-    adduser --ingroup ${APP_GROUP} --home /home/${APP_USER} ${APP_USER}
+RUN groupadd --gid "${APP_GID}" "${APP_GROUP}" \
+    && useradd --uid "${APP_UID}" --gid "${APP_GROUP}" -m -s /bin/bash "${APP_USER}"
 
 WORKDIR /backend
 COPY --from=builder /backend /backend
