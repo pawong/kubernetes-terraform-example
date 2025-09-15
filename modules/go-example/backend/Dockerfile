@@ -40,4 +40,3 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 EXPOSE 8080
 
 CMD ["./main"]
-

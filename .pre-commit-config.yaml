@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.89.1 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+  rev: v1.100.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
   hooks:
     - id: terraform_fmt
     - id: terraform_docs
@@ -8,3 +8,9 @@ repos:
       args:
         - --args=--quiet
         - --args=--skip-check CKV2_AWS_8
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    #-   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
