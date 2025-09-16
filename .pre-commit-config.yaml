@@ -8,13 +8,21 @@ repos:
       args:
         - --args=--quiet
         - --args=--skip-check CKV2_AWS_8
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
-    hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
--   repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-    -   id: black
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+- repo: https://github.com/psf/black
+  rev: 25.1.0
+  hooks:
+  - id: black
+- repo: https://github.com/dnephin/pre-commit-golang
+  rev: v0.5.1
+  hooks:
+  - id: go-fmt
+  #- id: go-imports
+  #- id: no-go-testing
+  #- id: golangci-lint
+  #- id: go-unit-tests

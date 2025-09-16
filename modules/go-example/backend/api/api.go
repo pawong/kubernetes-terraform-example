@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand/v2"
 	"net"
 	"net/http"
@@ -19,7 +20,10 @@ func main() {
 	router.GET("/8ball", getAnwserOnly)
 	router.POST("/8ball", getAnwser)
 
-	router.Run("0.0.0.0:8080")
+	err := router.Run("0.0.0.0:8080")
+	if err != nil {
+		fmt.Printf("Server failed to start: %v", err)
+	}
 }
 
 func readRoot(c *gin.Context) {

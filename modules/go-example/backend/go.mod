@@ -1,8 +1,8 @@
-module backend
+module api
 
-go 1.22.2
+go 1.25.1
 
-require github.com/gin-gonic/gin v1.10.0
+require github.com/gin-gonic/gin v1.10.1
 
 require (
 	github.com/bytedance/sonic v1.11.6 // indirect

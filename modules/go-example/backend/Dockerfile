@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o main main.go
+RUN go build -o api api/api.go
 
 FROM alpine:3.20
 
@@ -29,7 +29,7 @@ ENV HOST=0.0.0.0
 ENV PORT=8080
 
 WORKDIR /backend
-COPY --from=builder /backend/main .
+COPY --from=builder /backend/api/api .
 RUN chown -R ${APP_USER}:${APP_GROUP} /backend
 
 USER ${APP_USER}
@@ -39,4 +39,4 @@ HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
 
 EXPOSE 8080
 
-CMD ["./main"]
+CMD ["./api"]
