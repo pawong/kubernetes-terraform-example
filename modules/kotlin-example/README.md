@@ -2,7 +2,7 @@
 
 Builds and deploys a simple Kotlin Example, includes service and ingress.
 
-For a quick start, backend servers can use [**Ktor Project Generator**](https://start.ktor.io/#/settings?name=kotlin-example&website=example.com&artifact=com.example.kotlin-example&kotlinVersion=1.9.22&ktorVersion=2.3.7&buildSystem=GRADLE_KTS&engine=NETTY&configurationIn=CODE&addSampleCode=true&plugins=).
+For a quick start, backend servers can use [**Ktor Project Generator**](https://start.ktor.io/#/settings?name=kotlin-example&website=example.com&artifact=com.example.kotlin-example&kotlinVersion=2.3.0&ktorVersion=3.3.3&buildSystem=GRADLE_KTS&engine=NETTY&configurationIn=CODE&addSampleCode=true&plugins=).
 
 Using local Docker for building.
 

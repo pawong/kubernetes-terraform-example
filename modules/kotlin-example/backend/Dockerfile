@@ -1,4 +1,4 @@
-ARG VERSION=21
+ARG VERSION=27-ea
 FROM gradle:latest AS build
 
 COPY . /backend

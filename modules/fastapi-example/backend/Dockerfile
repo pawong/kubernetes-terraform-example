@@ -1,5 +1,8 @@
-FROM python:3.12-bookworm
+FROM python:3.12-slim
 ARG GIT_HASH
+
+# Update system packages to address vulnerabilities and remove unnecessary packages
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get clean
 
 COPY ./ /backend/
 WORKDIR /backend/
@@ -9,6 +12,19 @@ RUN echo ${GIT_HASH} > REVISION
 
 RUN apt update
 RUN pip3 install poetry
+
+ENV APP_USER=worker
+ENV APP_GROUP=worker
+ENV APP_UID=1001
+ENV APP_GID=1001
+
+RUN groupadd --gid "${APP_GID}" "${APP_GROUP}" \
+    && useradd --uid "${APP_UID}" --gid "${APP_GROUP}" -m -s /bin/bash "${APP_USER}"
+
+EXPOSE 81
+
+USER ${APP_USER}
+
 RUN poetry install --only main --no-root
 
 CMD ["poetry", "run", "uvicorn", "api.main:api", "--host", "0.0.0.0", "--port", "81"]

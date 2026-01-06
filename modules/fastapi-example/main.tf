@@ -49,6 +49,18 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
           name              = "${var.module_name}-container"
           image_pull_policy = "Never"
 
+          security_context {
+            run_as_non_root = true
+            run_as_user     = 1001
+
+            allow_privilege_escalation = false # Controls whether a process can gain more privileges than its parent
+            read_only_root_filesystem  = true
+            capabilities {
+              drop = ["ALL"]              # Drops all Linux capabilities
+              add  = ["NET_BIND_SERVICE"] # Adds the specified capability
+            }
+          }
+
           liveness_probe {
             http_get {
               path = "/health"

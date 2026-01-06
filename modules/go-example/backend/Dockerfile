@@ -32,11 +32,11 @@ WORKDIR /backend
 COPY --from=builder /backend/api/api .
 RUN chown -R ${APP_USER}:${APP_GROUP} /backend
 
-USER ${APP_USER}
-
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
     CMD curl -f http://localhost/health || exit 1
 
 EXPOSE 8080
+
+USER ${APP_USER}
 
 CMD ["./api"]

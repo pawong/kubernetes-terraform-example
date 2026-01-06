@@ -73,3 +73,9 @@ module "cronjobs" {
   source      = "../modules/cronjobs"
   module_name = "cronjobs"
 }
+
+module "portainer" {
+  source         = "../modules/portainer"
+  domain_name    = "example.com"
+  subdomain_name = "portainer"
+}
