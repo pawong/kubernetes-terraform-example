@@ -14,4 +14,7 @@ ARG GIT_HASH
 ENV GIT_HASH=${GIT_HASH}
 RUN echo ${GIT_HASH} > REVISION
 
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=20s \
+    CMD curl -f http://localhost:8080/health || exit 1
+
 CMD ["java","-jar","run.jar"]

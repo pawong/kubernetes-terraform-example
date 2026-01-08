@@ -45,9 +45,10 @@ resource "kubernetes_deployment_v1" "go_deployment" {
       }
       spec {
         container {
-          image             = "${docker_image.go_example_image.name}:latest"
-          name              = "${var.module_name}-container"
-          image_pull_policy = "Never"
+          image = "${docker_image.go_example_image.name}:latest"
+          name  = "${var.module_name}-container"
+          # image_pull_policy = "Never"
+
           resources {
             limits = {
               memory = "256Mi" # This addresses CKV_K8S_13

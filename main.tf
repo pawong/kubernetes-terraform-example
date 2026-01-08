@@ -13,27 +13,27 @@ data "external" "git" {
 ## Examples
 
 module "postgresql" {
-  source               = "../modules/postgresql"
+  source               = "./modules/postgresql"
   kubernetes_namespace = "postgresql"
   postgresql_password  = "changeme"
 }
 
 module "nginx_example" {
-  source              = "../modules/nginx-example"
+  source              = "./modules/nginx-example"
   domain_name         = "example.com"
   subdomain_name      = "nginx"
   host_data_directory = "/shares/data"
 }
 
 module "ingress_example" {
-  source              = "../modules/ingress-example"
+  source              = "./modules/ingress-example"
   domain_name         = "example.com"
   subdomain_name      = "ingress"
   host_data_directory = "/shares/data"
 }
 
 module "kotlin_example" {
-  source              = "../modules/kotlin-example"
+  source              = "./modules/kotlin-example"
   domain_name         = "example.com"
   subdomain_name      = "kotlin"
   host_data_directory = "/shares/data"
@@ -41,7 +41,7 @@ module "kotlin_example" {
 }
 
 module "express_example" {
-  source              = "../modules/express-example"
+  source              = "./modules/express-example"
   domain_name         = "example.com"
   subdomain_name      = "express"
   host_data_directory = "/shares/data"
@@ -49,7 +49,7 @@ module "express_example" {
 }
 
 module "fastapi_example" {
-  source              = "../modules/fastapi-example"
+  source              = "./modules/fastapi-example"
   domain_name         = "example.com"
   subdomain_name      = "fastapi"
   host_data_directory = "/shares/data"
@@ -57,7 +57,7 @@ module "fastapi_example" {
 }
 
 module "go_example" {
-  source              = "../modules/go-example"
+  source              = "./modules/go-example"
   domain_name         = "example.com"
   subdomain_name      = "go"
   host_data_directory = "/shares/data"
@@ -65,17 +65,17 @@ module "go_example" {
 }
 
 module "debug_pod" {
-  source              = "../modules/debug-pod"
+  source              = "./modules/debug-pod"
   host_data_directory = "/shares/data"
 }
 
 module "cronjobs" {
-  source      = "../modules/cronjobs"
+  source      = "./modules/cronjobs"
   module_name = "cronjobs"
 }
 
 module "portainer" {
-  source         = "../modules/portainer"
+  source         = "./modules/portainer"
   domain_name    = "example.com"
   subdomain_name = "portainer"
 }

@@ -61,6 +61,17 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
             }
           }
 
+          resources {
+            limits = {
+              memory = "256Mi" # This addresses CKV_K8S_13
+              cpu    = "500m"
+            }
+            requests = {
+              memory = "128Mi" # This addresses CKV_K8S_12
+              cpu    = "250m"
+            }
+          }
+
           liveness_probe {
             http_get {
               path = "/health"
@@ -72,6 +83,17 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
             }
             initial_delay_seconds = 10
             period_seconds        = 10
+          }
+          readiness_probe {
+            http_get {
+              path = "/health"
+              port = 81
+            }
+            initial_delay_seconds = 5
+            period_seconds        = 10
+            failure_threshold     = 3
+            success_threshold     = 1
+            timeout_seconds       = 1
           }
         }
         restart_policy = "Always"

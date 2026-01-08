@@ -48,6 +48,7 @@ resource "kubernetes_deployment_v1" "express_deployment" {
           image             = "${docker_image.express_example_image.name}:latest"
           name              = "${var.module_name}-container"
           image_pull_policy = "Never"
+
           resources {
             limits = {
               memory = "256Mi" # This addresses CKV_K8S_13
@@ -58,6 +59,7 @@ resource "kubernetes_deployment_v1" "express_deployment" {
               cpu    = "250m"
             }
           }
+
           security_context {
             run_as_non_root = true
             run_as_user     = 1001
@@ -69,6 +71,7 @@ resource "kubernetes_deployment_v1" "express_deployment" {
               add  = ["NET_BIND_SERVICE"] # Adds the specified capability
             }
           }
+
           liveness_probe {
             http_get {
               path = "/health"

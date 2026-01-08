@@ -28,10 +28,47 @@ resource "kubernetes_deployment_v1" "debug_pod_deployment" {
       }
       spec {
         container {
-          image             = "ubuntu"
+          image             = "ubuntu@sha256:4a9232cc47bf99defcc8860ef6222c99773330367fcecbf21ba2edb0b810a31e"
           name              = "${var.module_name}-container"
-          image_pull_policy = "IfNotPresent"
-          command           = ["sleep", "604800"]
+          image_pull_policy = "Always"
+
+          security_context {
+            capabilities {
+              drop = ["NET_RAW", "ALL"]
+            }
+            read_only_root_filesystem = true
+          }
+
+          # The actual command the container runs when it starts
+          command = ["/bin/sh", "-c", "tail -f /dev/null"]
+
+          readiness_probe {
+            exec {
+              command = ["/bin/sh", "-c", "cat /etc/hosts"]
+            }
+            initial_delay_seconds = 5
+            period_seconds        = 5
+            failure_threshold     = 1
+          }
+          liveness_probe {
+            exec {
+              command = ["sh", "-c", "pgrep systemd || exit 0"]
+            }
+            initial_delay_seconds = 10
+            period_seconds        = 10
+            failure_threshold     = 3
+          }
+
+          resources {
+            requests = {
+              memory = "256Mi"
+              cpu    = "250m"
+            }
+            limits = {
+              memory = "512Mi"
+              cpu    = "500m"
+            }
+          }
 
           env {
             name  = "TEST_ENV"

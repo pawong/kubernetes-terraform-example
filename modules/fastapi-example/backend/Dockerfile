@@ -27,4 +27,7 @@ USER ${APP_USER}
 
 RUN poetry install --only main --no-root
 
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=20s \
+    CMD curl -f http://localhost:81/health || exit 1
+
 CMD ["poetry", "run", "uvicorn", "api.main:api", "--host", "0.0.0.0", "--port", "81"]

@@ -28,27 +28,58 @@ resource "kubernetes_deployment_v1" "nginx_deployment" {
       }
       spec {
         container {
-          image = "nginx"
-          name  = "${var.module_name}-app"
+          image             = "nginx@sha256:e7e2c41c74775ccfe88d07fa3d9ebc9e0d6ae5c755244bc525153b37e308f699"
+          name              = "${var.module_name}-app"
+          image_pull_policy = "Always"
+
+          security_context {
+            capabilities {
+              drop = ["NET_RAW", "ALL"]
+            }
+            read_only_root_filesystem = true
+          }
+
+          port {
+            name           = "http"
+            container_port = 80
+          }
+
+          resources {
+            requests = {
+              memory = "128Mi"
+              cpu    = "125m"
+            }
+            limits = {
+              memory = "256Mi"
+              cpu    = "250m"
+            }
+          }
 
           env {
             name  = "TEST_ENV"
             value = "this-is-the-value"
           }
 
+          # Readiness Probe
+          readiness_probe {
+            http_get {
+              path = "/"
+              port = "http" # Refers to the name "http" defined in the port block
+            }
+            initial_delay_seconds = 5
+            period_seconds        = 10
+            failure_threshold     = 3
+          }
+
+          # Liveness Probe
           liveness_probe {
             http_get {
               path = "/"
-              port = 80
-
-              http_header {
-                name  = "X-Custom-Header"
-                value = "Awesome"
-              }
+              port = "http"
             }
-
-            initial_delay_seconds = 10
-            period_seconds        = 10
+            initial_delay_seconds = 15 # Give the app a bit more time to start before the first liveness check
+            period_seconds        = 20
+            failure_threshold     = 3
           }
 
           volume_mount {
