@@ -83,6 +83,35 @@ resource "kubernetes_deployment_v1" "postgresql_deployment" {
             container_port = 5432
           }
 
+          liveness_probe {
+            exec {
+              command = [
+                "sh",
+                "-c",
+                "pg_isready -U postgres"
+              ]
+            }
+
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            timeout_seconds       = 5
+            failure_threshold     = 3
+          }
+          readiness_probe {
+            exec {
+              command = [
+                "sh",
+                "-c",
+                "pg_isready -U postgres"
+              ]
+            }
+
+            initial_delay_seconds = 20
+            period_seconds        = 5
+            timeout_seconds       = 3
+            failure_threshold     = 2
+          }
+
           env_from {
             config_map_ref {
               name = kubernetes_config_map_v1.postgresql_config_map.metadata[0].name

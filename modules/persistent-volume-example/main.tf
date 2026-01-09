@@ -43,7 +43,8 @@ resource "kubernetes_persistent_volume_claim_v1" "pv_pvc" {
 
 resource "kubernetes_config_map_v1" "config_map" {
   metadata {
-    name = "${var.kubernetes_namespace}-config-map"
+    name      = "${var.kubernetes_namespace}-config-map"
+    namespace = kubernetes_namespace.pv_namespace.metadata.0.name
   }
   data = {
     POSTGRES_DB       = "ps_db"
