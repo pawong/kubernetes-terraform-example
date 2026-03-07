@@ -79,3 +79,9 @@ module "portainer" {
   domain_name    = "example.com"
   subdomain_name = "portainer"
 }
+
+module "dynamodb" {
+  source    = "./modules/dynamodb"
+  domain    = "example.com"
+  subdomain = "dynamodb"
+}
