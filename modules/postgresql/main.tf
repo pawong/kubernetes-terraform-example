@@ -77,10 +77,23 @@ resource "kubernetes_deployment_v1" "postgresql_deployment" {
       spec {
         container {
           name              = "${var.kubernetes_namespace}-container"
-          image             = "postgres:latest"
-          image_pull_policy = "IfNotPresent"
+          image             = "postgres:18.3"
+          image_pull_policy = "Always"
+
           port {
             container_port = 5432
+          }
+
+          resources {
+            limits = {
+              cpu    = "2"
+              memory = "2Gi"
+            }
+
+            requests = {
+              cpu    = "1"
+              memory = "1Gi"
+            }
           }
 
           liveness_probe {

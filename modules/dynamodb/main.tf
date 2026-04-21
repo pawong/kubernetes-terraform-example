@@ -66,6 +66,18 @@ resource "kubernetes_deployment_v1" "dynamodb_deployment" {
             container_port = 8000
           }
 
+          resources {
+            limits = {
+              cpu    = "1"
+              memory = "1Gi"
+            }
+
+            requests = {
+              cpu    = "0.5"
+              memory = "100Mi"
+            }
+          }
+
           dynamic "env" {
             for_each = local.envs
             content {

@@ -47,7 +47,7 @@ resource "kubernetes_deployment_v1" "kotlin_deployment" {
         container {
           image             = "${docker_image.kotlin_example_image.name}:latest"
           name              = "${var.module_name}-container"
-          image_pull_policy = "Never"
+          image_pull_policy = "Always"
 
           security_context {
             run_as_non_root = true

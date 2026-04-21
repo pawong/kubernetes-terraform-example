@@ -47,7 +47,7 @@ resource "kubernetes_deployment_v1" "express_deployment" {
         container {
           image             = "${docker_image.express_example_image.name}:latest"
           name              = "${var.module_name}-container"
-          image_pull_policy = "Never"
+          image_pull_policy = "Always"
 
           resources {
             limits = {
