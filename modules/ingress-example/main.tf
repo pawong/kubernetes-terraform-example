@@ -16,7 +16,7 @@ resource "kubernetes_pod" "apple_pod" {
     container {
       name              = "apple-pod"
       image             = "hashicorp/http-echo@sha256:fcb75f691c8b0414d670ae570240cbf95502cc18a9ba57e982ecac589760a186"
-      image_pull_policy = "Always"
+      image_pull_policy = "IfNotPresent"
       args              = ["-text=apple"]
 
       port {
@@ -94,7 +94,7 @@ resource "kubernetes_pod" "banana_pod" {
     container {
       name              = "banana-pod"
       image             = "hashicorp/http-echo@sha256:fcb75f691c8b0414d670ae570240cbf95502cc18a9ba57e982ecac589760a186"
-      image_pull_policy = "Always"
+      image_pull_policy = "IfNotPresent"
       args              = ["-text=banana"]
 
       port {

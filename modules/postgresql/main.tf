@@ -78,7 +78,7 @@ resource "kubernetes_deployment_v1" "postgresql_deployment" {
         container {
           name              = "${var.kubernetes_namespace}-container"
           image             = "postgres:18.3"
-          image_pull_policy = "Always"
+          image_pull_policy = "IfNotPresent"
 
           port {
             container_port = 5432

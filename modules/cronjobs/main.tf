@@ -35,7 +35,7 @@ resource "kubernetes_cron_job_v1" "cronjob" {
               image             = "bash"                         # Image used for the job
               command           = ["/bin/sh"]
               args              = ["-c", "date; echo Hello from the Kubernetes cluster cronjob"]
-              image_pull_policy = "Always"
+              image_pull_policy = "IfNotPresent"
             }
 
             restart_policy = "OnFailure"

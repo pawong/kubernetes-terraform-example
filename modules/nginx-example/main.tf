@@ -30,7 +30,7 @@ resource "kubernetes_deployment_v1" "nginx_deployment" {
         container {
           image             = "nginx@sha256:e7e2c41c74775ccfe88d07fa3d9ebc9e0d6ae5c755244bc525153b37e308f699"
           name              = "${var.module_name}-app"
-          image_pull_policy = "Always"
+          image_pull_policy = "IfNotPresent"
 
           security_context {
             capabilities {

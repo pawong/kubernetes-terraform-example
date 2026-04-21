@@ -30,7 +30,7 @@ resource "kubernetes_deployment_v1" "debug_pod_deployment" {
         container {
           image             = "ubuntu@sha256:4a9232cc47bf99defcc8860ef6222c99773330367fcecbf21ba2edb0b810a31e"
           name              = "${var.module_name}-container"
-          image_pull_policy = "Always"
+          image_pull_policy = "IfNotPresent"
 
           security_context {
             capabilities {

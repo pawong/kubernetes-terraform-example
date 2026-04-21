@@ -45,8 +45,9 @@ resource "kubernetes_deployment_v1" "dynamodb_deployment" {
       }
       spec {
         container {
-          image = "amazon/dynamodb-local:latest"
-          name  = "${var.module_name}-app"
+          image             = "amazon/dynamodb-local:latest"
+          image_pull_policy = "IfNotPresent"
+          name              = "${var.module_name}-app"
           args = [
             "-jar",
             "DynamoDBLocal.jar",
