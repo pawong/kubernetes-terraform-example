@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "postgresql_namespace" {
+resource "kubernetes_namespace_v1" "postgresql_namespace" {
   metadata {
     name = var.kubernetes_namespace
   }
@@ -17,7 +17,7 @@ resource "kubernetes_persistent_volume_v1" "postgresql_pv" {
     access_modes = ["ReadWriteMany"]
     persistent_volume_source {
       host_path {
-        path = "/shares/data/postgresql"
+        path = "${var.host_data_directory}/postgresql"
         type = "DirectoryOrCreate"
       }
     }
@@ -27,7 +27,7 @@ resource "kubernetes_persistent_volume_v1" "postgresql_pv" {
 resource "kubernetes_persistent_volume_claim_v1" "postgresql_pvc" {
   metadata {
     name      = "${var.kubernetes_namespace}-pvc"
-    namespace = kubernetes_namespace.postgresql_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.postgresql_namespace.metadata[0].name
   }
   spec {
     storage_class_name = "pstore-high"
@@ -43,7 +43,7 @@ resource "kubernetes_persistent_volume_claim_v1" "postgresql_pvc" {
 resource "kubernetes_config_map_v1" "postgresql_config_map" {
   metadata {
     name      = "${var.kubernetes_namespace}-config-map"
-    namespace = kubernetes_namespace.postgresql_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.postgresql_namespace.metadata[0].name
   }
   data = {
     POSTGRES_DB       = "postgres"
@@ -55,7 +55,7 @@ resource "kubernetes_config_map_v1" "postgresql_config_map" {
 resource "kubernetes_deployment_v1" "postgresql_deployment" {
   metadata {
     name      = "${var.kubernetes_namespace}-deployment"
-    namespace = kubernetes_namespace.postgresql_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.postgresql_namespace.metadata[0].name
     labels = {
       app = "${var.kubernetes_namespace}-app"
     }
@@ -77,7 +77,7 @@ resource "kubernetes_deployment_v1" "postgresql_deployment" {
       spec {
         container {
           name              = "${var.kubernetes_namespace}-container"
-          image             = "postgres:14"
+          image             = "postgres:latest"
           image_pull_policy = "IfNotPresent"
           port {
             container_port = 5432
@@ -120,7 +120,7 @@ resource "kubernetes_deployment_v1" "postgresql_deployment" {
 
           volume_mount {
             name       = "${var.kubernetes_namespace}-pv"
-            mount_path = "/var/lib/postgresql/data"
+            mount_path = "/var/lib/postgresql"
           }
         }
 
@@ -141,14 +141,18 @@ resource "kubernetes_deployment_v1" "postgresql_deployment" {
 resource "kubernetes_service_v1" "postgresql_service" {
   metadata {
     name      = "${var.kubernetes_namespace}-service"
-    namespace = kubernetes_namespace.postgresql_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.postgresql_namespace.metadata[0].name
   }
   spec {
     selector = {
       app = "${var.kubernetes_namespace}-app"
     }
     port {
-      port = 5432
+      port        = 5432
+      target_port = 5432
+      protocol    = "TCP"
+      node_port   = 30032
     }
+    type = "NodePort"
   }
 }

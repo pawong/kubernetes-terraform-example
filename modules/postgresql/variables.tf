@@ -37,4 +37,5 @@ variable "postgresql_username" {
 variable "postgresql_password" {
   sensitive   = true
   description = "PostgreSQL Password"
+  default     = "password"
 }
