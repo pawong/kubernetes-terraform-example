@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "dynamodb_namespace" {
+resource "kubernetes_namespace_v1" "dynamodb_namespace" {
   metadata {
     name = var.module_name
   }
@@ -25,7 +25,7 @@ provider "aws" {
 resource "kubernetes_deployment_v1" "dynamodb_deployment" {
   metadata {
     name      = var.module_name
-    namespace = kubernetes_namespace.dynamodb_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.dynamodb_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }
@@ -130,7 +130,7 @@ resource "kubernetes_deployment_v1" "dynamodb_deployment" {
 resource "kubernetes_service_v1" "dynamodb_service" {
   metadata {
     name      = "${var.module_name}-service"
-    namespace = kubernetes_namespace.dynamodb_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.dynamodb_namespace.metadata[0].name
   }
   spec {
     selector = {

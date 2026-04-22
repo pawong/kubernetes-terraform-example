@@ -7,5 +7,5 @@ As mentioned in the variable file, `host_data_directory` will point to the data 
 ### Connect
 
 ```
-% kubectl exec -n npm -it pod/<pod_name> -- /bin/bash
+% kubectl exec -n nginx-example -it pod/<pod_name> -- /bin/bash
 ```

@@ -19,7 +19,7 @@ ENV APP_GID=1001
 RUN groupadd --gid "${APP_GID}" "${APP_GROUP}" \
     && useradd --uid "${APP_UID}" --gid "${APP_GROUP}" -m -s /bin/bash "${APP_USER}"
 
-EXPOSE 81
+EXPOSE 8080
 
 USER ${APP_USER}
 
@@ -28,4 +28,4 @@ RUN poetry install --only main --no-root
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=20s \
     CMD curl -f http://localhost:81/health || exit 1
 
-CMD ["poetry", "run", "uvicorn", "api.main:api", "--host", "0.0.0.0", "--port", "81"]
+CMD ["poetry", "run", "uvicorn", "api.main:api", "--host", "0.0.0.0", "--port", "8080"]

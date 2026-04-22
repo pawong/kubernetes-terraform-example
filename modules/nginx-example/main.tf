@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "nginx_namespace" {
+resource "kubernetes_namespace_v1" "nginx_namespace" {
   metadata {
     name = var.module_name
   }
@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "nginx_namespace" {
 resource "kubernetes_deployment_v1" "nginx_deployment" {
   metadata {
     name      = "${var.module_name}-deployment"
-    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.nginx_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }
@@ -28,20 +28,21 @@ resource "kubernetes_deployment_v1" "nginx_deployment" {
       }
       spec {
         container {
-          image             = "nginx@sha256:e7e2c41c74775ccfe88d07fa3d9ebc9e0d6ae5c755244bc525153b37e308f699"
+          image             = "nginxinc/ingress-demo@sha256:5c700ccd073ae0f9bd8d6ed37bfadbabcfbe2a0cbd10564c6a94601233c3ed2a"
           name              = "${var.module_name}-app"
           image_pull_policy = "IfNotPresent"
 
           security_context {
             capabilities {
-              drop = ["NET_RAW", "ALL"]
+              drop = ["ALL"]              # Drops all Linux capabilities
+              add  = ["NET_BIND_SERVICE"] # Adds the specified capability
             }
-            read_only_root_filesystem = true
+            read_only_root_filesystem = false
           }
 
           port {
             name           = "http"
-            container_port = 80
+            container_port = 8080
           }
 
           resources {
@@ -105,14 +106,14 @@ resource "kubernetes_deployment_v1" "nginx_deployment" {
 resource "kubernetes_service_v1" "nginx_example_service" {
   metadata {
     name      = "${var.module_name}-service"
-    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.nginx_namespace.metadata[0].name
   }
   spec {
     selector = {
       app = "${var.module_name}-app"
     }
     port {
-      port = 80
+      port = 8080
     }
   }
 }
@@ -120,7 +121,7 @@ resource "kubernetes_service_v1" "nginx_example_service" {
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "nginx-example-ingress"
-    namespace = kubernetes_namespace.nginx_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.nginx_namespace.metadata[0].name
   }
   spec {
     rule {
@@ -131,7 +132,7 @@ resource "kubernetes_ingress_v1" "ingress" {
             service {
               name = kubernetes_service_v1.nginx_example_service.metadata.0.name
               port {
-                number = 80
+                number = 8080
               }
             }
           }

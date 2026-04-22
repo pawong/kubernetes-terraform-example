@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "go_namespace" {
+resource "kubernetes_namespace_v1" "go_namespace" {
   metadata {
     name = var.module_name
   }
@@ -25,7 +25,7 @@ resource "docker_image" "go_example_image" {
 resource "kubernetes_deployment_v1" "go_deployment" {
   metadata {
     name      = "${var.module_name}-deployment"
-    namespace = kubernetes_namespace.go_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.go_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }
@@ -104,7 +104,7 @@ resource "kubernetes_deployment_v1" "go_deployment" {
 resource "kubernetes_service_v1" "go_example_service" {
   metadata {
     name      = "${var.module_name}-service"
-    namespace = kubernetes_namespace.go_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.go_namespace.metadata[0].name
   }
   spec {
     selector = {
@@ -119,7 +119,7 @@ resource "kubernetes_service_v1" "go_example_service" {
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "${var.module_name}-ingress"
-    namespace = kubernetes_namespace.go_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.go_namespace.metadata[0].name
   }
   spec {
     rule {

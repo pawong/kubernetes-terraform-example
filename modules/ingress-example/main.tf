@@ -1,13 +1,13 @@
-resource "kubernetes_namespace" "ingress_example_namespace" {
+resource "kubernetes_namespace_v1" "ingress_example_namespace" {
   metadata {
     name = var.module_name
   }
 }
 
-resource "kubernetes_pod" "apple_pod" {
+resource "kubernetes_pod_v1" "apple_pod" {
   metadata {
     name      = "apple-pod"
-    namespace = kubernetes_namespace.ingress_example_namespace.metadata.0.name
+    namespace = kubernetes_namespace_v1.ingress_example_namespace.metadata.0.name
     labels = {
       app = "apple"
     }
@@ -70,7 +70,7 @@ resource "kubernetes_pod" "apple_pod" {
 resource "kubernetes_service_v1" "apple_service" {
   metadata {
     name      = "apple-service"
-    namespace = kubernetes_namespace.ingress_example_namespace.metadata.0.name
+    namespace = kubernetes_namespace_v1.ingress_example_namespace.metadata.0.name
   }
   spec {
     selector = {
@@ -82,10 +82,10 @@ resource "kubernetes_service_v1" "apple_service" {
   }
 }
 
-resource "kubernetes_pod" "banana_pod" {
+resource "kubernetes_pod_v1" "banana_pod" {
   metadata {
     name      = "banana-pod"
-    namespace = kubernetes_namespace.ingress_example_namespace.metadata.0.name
+    namespace = kubernetes_namespace_v1.ingress_example_namespace.metadata.0.name
     labels = {
       app = "banana"
     }
@@ -148,7 +148,7 @@ resource "kubernetes_pod" "banana_pod" {
 resource "kubernetes_service_v1" "banana_service" {
   metadata {
     name      = "banana-service"
-    namespace = kubernetes_namespace.ingress_example_namespace.metadata.0.name
+    namespace = kubernetes_namespace_v1.ingress_example_namespace.metadata.0.name
   }
   spec {
     selector = {
@@ -163,7 +163,7 @@ resource "kubernetes_service_v1" "banana_service" {
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "ingress-example"
-    namespace = kubernetes_namespace.ingress_example_namespace.metadata.0.name
+    namespace = kubernetes_namespace_v1.ingress_example_namespace.metadata.0.name
   }
   spec {
     # default_backend {

@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "cronjobs_namespace" {
+resource "kubernetes_namespace_v1" "cronjobs_namespace" {
   metadata {
     name = var.module_name
   }
@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "cronjobs_namespace" {
 resource "kubernetes_cron_job_v1" "cronjob" {
   metadata {
     name      = "${var.module_name}-cronjob"
-    namespace = kubernetes_namespace.cronjobs_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.cronjobs_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }

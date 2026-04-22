@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "fastapi_namespace" {
+resource "kubernetes_namespace_v1" "fastapi_namespace" {
   metadata {
     name = var.module_name
   }
@@ -25,7 +25,7 @@ resource "docker_image" "fastapi_example_image" {
 resource "kubernetes_deployment_v1" "fastapi_deployment" {
   metadata {
     name      = "${var.module_name}-deployment"
-    namespace = kubernetes_namespace.fastapi_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.fastapi_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }
@@ -75,7 +75,7 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
           liveness_probe {
             http_get {
               path = "/health"
-              port = 81
+              port = 8080
               http_header {
                 name  = "X-Custom-Header"
                 value = "Awesome"
@@ -87,7 +87,7 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
           readiness_probe {
             http_get {
               path = "/health"
-              port = 81
+              port = 8080
             }
             initial_delay_seconds = 5
             period_seconds        = 10
@@ -105,14 +105,14 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
 resource "kubernetes_service_v1" "fastapi_example_service" {
   metadata {
     name      = "${var.module_name}-service"
-    namespace = kubernetes_namespace.fastapi_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.fastapi_namespace.metadata[0].name
   }
   spec {
     selector = {
       app = "${var.module_name}-app"
     }
     port {
-      port = 81
+      port = 8080
     }
   }
 }
@@ -120,7 +120,7 @@ resource "kubernetes_service_v1" "fastapi_example_service" {
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "${var.module_name}-ingress"
-    namespace = kubernetes_namespace.fastapi_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.fastapi_namespace.metadata[0].name
   }
   spec {
     rule {
@@ -131,7 +131,7 @@ resource "kubernetes_ingress_v1" "ingress" {
             service {
               name = kubernetes_service_v1.fastapi_example_service.metadata.0.name
               port {
-                number = 81
+                number = 8080
               }
             }
           }

@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "debug_pod_namespace" {
+resource "kubernetes_namespace_v1" "debug_pod_namespace" {
   metadata {
     name = var.module_name
   }
@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "debug_pod_namespace" {
 resource "kubernetes_deployment_v1" "debug_pod_deployment" {
   metadata {
     name      = "${var.module_name}-deployment"
-    namespace = kubernetes_namespace.debug_pod_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.debug_pod_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }

@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------------------------------------
 # Kubernetes
 #---------------------------------------------------------------------------------------------------
-variable "kubernetes_namespace" {
+variable "kubernetes_namespace_v1" {
   sensitive   = false
   type        = string
   description = "PV Kubernetes Namespace"

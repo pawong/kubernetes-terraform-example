@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "kotlin_namespace" {
+resource "kubernetes_namespace_v1" "kotlin_namespace" {
   metadata {
     name = var.module_name
   }
@@ -25,7 +25,7 @@ resource "docker_image" "kotlin_example_image" {
 resource "kubernetes_deployment_v1" "kotlin_deployment" {
   metadata {
     name      = "${var.module_name}-deployment"
-    namespace = kubernetes_namespace.kotlin_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.kotlin_namespace.metadata[0].name
     labels = {
       app = "${var.module_name}-app"
     }
@@ -45,7 +45,7 @@ resource "kubernetes_deployment_v1" "kotlin_deployment" {
       }
       spec {
         container {
-          image             = "${docker_image.kotlin_example_image.name}:latest"
+          image             = "docker.io/library/${docker_image.kotlin_example_image.name}:latest"
           name              = "${var.module_name}-container"
           image_pull_policy = "IfNotPresent"
 
@@ -105,7 +105,7 @@ resource "kubernetes_deployment_v1" "kotlin_deployment" {
 resource "kubernetes_service_v1" "kotlin_example_service" {
   metadata {
     name      = "${var.module_name}-service"
-    namespace = kubernetes_namespace.kotlin_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.kotlin_namespace.metadata[0].name
   }
   spec {
     selector = {
@@ -120,7 +120,7 @@ resource "kubernetes_service_v1" "kotlin_example_service" {
 resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "${var.module_name}-ingress"
-    namespace = kubernetes_namespace.kotlin_namespace.metadata[0].name
+    namespace = kubernetes_namespace_v1.kotlin_namespace.metadata[0].name
   }
   spec {
     rule {
