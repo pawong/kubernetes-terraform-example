@@ -85,3 +85,7 @@ module "dynamodb" {
   domain    = "example.com"
   subdomain = "dynamodb"
 }
+
+module "mongodb" {
+  source = "./modules/mongodb"
+}
