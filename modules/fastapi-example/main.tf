@@ -64,11 +64,11 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
           resources {
             limits = {
               memory = "256Mi" # This addresses CKV_K8S_13
-              cpu    = "500m"
+              cpu    = "250m"
             }
             requests = {
               memory = "128Mi" # This addresses CKV_K8S_12
-              cpu    = "250m"
+              cpu    = "125m"
             }
           }
 

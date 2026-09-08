@@ -61,12 +61,12 @@ resource "kubernetes_deployment_v1" "debug_pod_deployment" {
 
           resources {
             requests = {
-              memory = "256Mi"
-              cpu    = "250m"
+              memory = "128Mi"
+              cpu    = "125m"
             }
             limits = {
-              memory = "512Mi"
-              cpu    = "500m"
+              memory = "256Mi"
+              cpu    = "250m"
             }
           }
 
