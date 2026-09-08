@@ -15,7 +15,7 @@ data "external" "git" {
 module "postgresql" {
   source               = "./modules/postgresql"
   kubernetes_namespace = "postgresql"
-  postgresql_password  = "changeme"
+  postgresql_password  = var.postgresql_password
 }
 
 module "nginx_example" {
@@ -87,5 +87,14 @@ module "dynamodb" {
 }
 
 module "mongodb" {
-  source = "./modules/mongodb"
+  source         = "./modules/mongodb"
+  mongo_password = var.mongodb_password
+}
+
+module "couchbase" {
+  source              = "./modules/couchbase"
+  domain_name         = "example.com"
+  subdomain_name      = "couchbase"
+  host_data_directory = "/shares/data"
+  couchbase_password  = var.couchbase_password
 }

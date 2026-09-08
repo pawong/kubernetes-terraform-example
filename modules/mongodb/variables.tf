@@ -26,6 +26,6 @@ variable "mongo_username" {
 
 variable "mongo_password" {
   sensitive   = true
-  description = "MongoDB Password"
-  default     = "password"
+  type        = string
+  description = "MongoDB Password, supplied from the root secrets.auto.tfvars"
 }

@@ -14,3 +14,12 @@ variable "host_data_directory" {
   description = "Host Data Directory"
   default     = "/shares/data"
 }
+
+#---------------------------------------------------------------------------------------------------
+# Authentication
+#---------------------------------------------------------------------------------------------------
+variable "postgresql_password" {
+  sensitive   = true
+  type        = string
+  description = "PostgreSQL Password, supplied from the root secrets.auto.tfvars"
+}

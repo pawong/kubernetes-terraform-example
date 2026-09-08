@@ -47,8 +47,18 @@ resource "kubernetes_config_map_v1" "config_map" {
     namespace = kubernetes_namespace_v1.pv_namespace.metadata.0.name
   }
   data = {
-    POSTGRES_DB       = "ps_db"
-    POSTGRES_USER     = "ps_user"
-    POSTGRES_PASSWORD = "handang0"
+    POSTGRES_DB   = "ps_db"
+    POSTGRES_USER = "ps_user"
+  }
+}
+
+resource "kubernetes_secret_v1" "secret" {
+  metadata {
+    name      = "${var.kubernetes_namespace_v1}-secret"
+    namespace = kubernetes_namespace_v1.pv_namespace.metadata.0.name
+  }
+  type = "Opaque"
+  data = {
+    POSTGRES_PASSWORD = var.postgresql_password
   }
 }

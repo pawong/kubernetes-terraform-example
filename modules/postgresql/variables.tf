@@ -36,6 +36,6 @@ variable "postgresql_username" {
 
 variable "postgresql_password" {
   sensitive   = true
-  description = "PostgreSQL Password"
-  default     = "password"
+  type        = string
+  description = "PostgreSQL Password, supplied from the root secrets.auto.tfvars"
 }
