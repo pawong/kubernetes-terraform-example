@@ -2,10 +2,27 @@
 
 Single node [Couchbase Server](https://www.couchbase.com/) deployment.
 
-Defaults to `couchbase:community-8.0.2`, the latest Community Edition release.
-The latest Enterprise release is `couchbase:enterprise-8.0.3`, which needs a
-licence for anything other than development/testing - set `couchbase_image` to
-use it.
+## Version
+
+Defaults to `couchbase:community-7.6.2`, **not** the newer 8.0 line. Couchbase
+Server 8.0 refuses to start unless the CPU is x86-64-v3:
+
+```
+Aborting! Couchbase Server requires x86_64 CPU microarchitecture v3 or higher (found v2).
+```
+
+Check before bumping `couchbase_image` to `community-8.0.2`:
+
+```bash
+% grep -o 'avx2' /proc/cpuinfo | head -1   # on the node - empty means v2, so stay on 7.6
+```
+
+Enterprise builds (`couchbase:enterprise-8.0.3`) need a licence for anything
+other than development/testing.
+
+Startup logs a warning that the open file limit is 65536 rather than the
+recommended 200000. It is inherited from the container runtime and is not fatal
+for a single-node dev cluster.
 
 Couchbase persists its node name in the on-disk config, so the server runs as a
 `StatefulSet` (stable `couchbase-0` hostname) backed by a static hostPath

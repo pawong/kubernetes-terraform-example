@@ -32,11 +32,14 @@ variable "subdomain_name" {
 #---------------------------------------------------------------------------------------------------
 # Couchbase
 #---------------------------------------------------------------------------------------------------
+# Couchbase Server 8.0 aborts on startup unless the CPU is x86-64-v3 (AVX2 and friends), which the
+# homelab node is not, so this stays on the newest 7.6 Community build. Bump to community-8.0.2 once
+# the cluster runs on newer hardware. Enterprise builds need a licence outside dev/test.
 variable "couchbase_image" {
   sensitive   = false
   type        = string
-  description = "Couchbase Server image. Community Edition is free to run; use `couchbase:enterprise-8.0.3` only with an Enterprise licence."
-  default     = "couchbase:community-8.0.2"
+  description = "Couchbase Server image. 8.0 and later require an x86-64-v3 CPU."
+  default     = "couchbase:community-7.6.2"
 }
 
 variable "couchbase_services" {
