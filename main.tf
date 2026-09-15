@@ -64,21 +64,21 @@ module "go_example" {
   GIT_HASH            = data.external.git.result.GIT_HASH
 }
 
-module "debug_pod" {
-  source              = "./modules/debug-pod"
-  host_data_directory = "/shares/data"
-}
+#module "debug_pod" {
+#  source              = "./modules/debug-pod"
+#  host_data_directory = "/shares/data"
+#}
 
 module "cronjobs" {
   source      = "./modules/cronjobs"
   module_name = "cronjobs"
 }
 
-module "portainer" {
-  source         = "./modules/portainer"
-  domain_name    = "example.com"
-  subdomain_name = "portainer"
-}
+#module "portainer" {
+#  source         = "./modules/portainer"
+#  domain_name    = "example.com"
+#  subdomain_name = "portainer"
+#}
 
 module "dynamodb" {
   source    = "./modules/dynamodb"
@@ -86,15 +86,21 @@ module "dynamodb" {
   subdomain = "dynamodb"
 }
 
-module "mongodb" {
-  source         = "./modules/mongodb"
-  mongo_password = var.mongodb_password
-}
+#module "mongodb" {
+#  source         = "./modules/mongodb"
+#  mongo_password = var.mongodb_password
+#}
 
-module "couchbase" {
-  source              = "./modules/couchbase"
-  domain_name         = "example.com"
-  subdomain_name      = "couchbase"
-  host_data_directory = "/shares/data"
-  couchbase_password  = var.couchbase_password
+#module "couchbase" {
+#  source              = "./modules/couchbase"
+#  domain_name         = "example.com"
+#  subdomain_name      = "couchbase"
+#  host_data_directory = "/shares/data"
+#  couchbase_password  = var.couchbase_password
+#}
+
+module "observability" {
+  source    = "./modules/observability"
+  domain    = "example.com"
+  subdomain = "grafz"
 }

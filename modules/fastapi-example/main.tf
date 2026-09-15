@@ -102,6 +102,52 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
   }
 }
 
+resource "kubernetes_horizontal_pod_autoscaler_v2" "fastapi_hpa" {
+  metadata {
+    name      = "${var.module_name}-hpa"
+    namespace = kubernetes_namespace_v1.fastapi_namespace.metadata[0].name
+    labels = {
+      app = "${var.module_name}-app"
+    }
+  }
+
+  spec {
+    min_replicas = 1
+    max_replicas = 4
+
+    # Target the deployment created above
+    scale_target_ref {
+      api_version = "apps/v1"
+      kind        = "Deployment"
+      name        = kubernetes_deployment_v1.fastapi_deployment.metadata[0].name
+    }
+
+    # Define scaling metrics (e.g., Target 70% average CPU utilization)
+    metric {
+      type = "Resource"
+      resource {
+        name = "cpu"
+        target {
+          type                = "Utilization"
+          average_utilization = 70
+        }
+      }
+    }
+
+    # Optional: Define memory scaling metric
+    metric {
+      type = "Resource"
+      resource {
+        name = "memory"
+        target {
+          type                = "Utilization"
+          average_utilization = 80
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_service_v1" "fastapi_example_service" {
   metadata {
     name      = "${var.module_name}-service"
