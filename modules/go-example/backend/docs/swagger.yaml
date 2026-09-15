@@ -1,0 +1,99 @@
+basePath: /
+definitions:
+  main.response:
+    properties:
+      answer:
+        type: string
+      question:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: A simple Magic 8 Ball REST API.
+  title: Magic 8 Ball API
+  version: "1.0"
+paths:
+  /:
+    get:
+      description: Returns a simple hello message.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Root endpoint
+      tags:
+      - General
+  /8ball:
+    get:
+      description: Returns a random Magic 8 Ball answer.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Magic 8 Ball answer
+      tags:
+      - 8ball
+    post:
+      consumes:
+      - application/json
+      description: Submit a question and receive a random Magic 8 Ball answer.
+      parameters:
+      - description: Question
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.response'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.response'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Ask the Magic 8 Ball
+      tags:
+      - 8ball
+  /health:
+    get:
+      description: Returns information about the running server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Health check
+      tags:
+      - General
+  /keepalive:
+    get:
+      description: Simple endpoint used to verify the server is responding.
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: I'm alive!
+          schema:
+            type: string
+      summary: Keep alive
+      tags:
+      - General
+swagger: "2.0"

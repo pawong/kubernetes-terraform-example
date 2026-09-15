@@ -6,6 +6,10 @@
 % go run .
 ```
 
+#### Doc files
+
+http://localhost:8080/swagger/index.html
+
 ## The real build/issue issue
 
 The image is getting build and pushed to docker locally, however the deploy is trying to pull from some repository in the sky (most likely `docker.io`). This is causing the pull to fail and just have some bad html in it. I haven't found a good way to use docker as a repository.
@@ -15,7 +19,7 @@ This is the documentation, <https://microk8s.io/docs/registry-images>.
 TL;DR
 
 ```bash
-% docker build -t library/go-example-image:latest --platform linux/arm64 --build-arg GIT_HASH=$(git rev-parse --short HEAD) . # check your deployment platform
+% docker build -t library/go-example-image:latest --platform linux/amd64,linux/arm64 --build-arg GIT_HASH=$(git rev-parse --short HEAD) . # check your deployment platform
 % docker save library/go-example-image:latest > go-example-image.tar
 % scp go-example-image.tar {username@hostname}:
 # on host
