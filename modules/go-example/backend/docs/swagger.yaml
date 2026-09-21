@@ -7,7 +7,7 @@ definitions:
       question:
         type: string
     type: object
-host: localhost:8080
+host: go.example.com
 info:
   contact: {}
   description: A simple Magic 8 Ball REST API.

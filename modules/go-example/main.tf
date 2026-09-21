@@ -112,7 +112,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "go_hpa" {
 
   spec {
     min_replicas = 1
-    max_replicas = 4
+    max_replicas = 2
 
     # Target the deployment created above
     scale_target_ref {
