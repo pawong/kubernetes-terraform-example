@@ -51,11 +51,11 @@ resource "kubernetes_deployment_v1" "express_deployment" {
 
           resources {
             limits = {
-              memory = "256Mi" # This addresses CKV_K8S_13
+              memory = "512Mi" # This addresses CKV_K8S_13
               cpu    = "250m"
             }
             requests = {
-              memory = "128Mi" # This addresses CKV_K8S_12
+              memory = "256Mi" # This addresses CKV_K8S_12
               cpu    = "125m"
             }
           }
@@ -97,6 +97,52 @@ resource "kubernetes_deployment_v1" "express_deployment" {
           }
         }
         restart_policy = "Always"
+      }
+    }
+  }
+}
+
+resource "kubernetes_horizontal_pod_autoscaler_v2" "express_hpa" {
+  metadata {
+    name      = "${var.module_name}-hpa"
+    namespace = kubernetes_namespace_v1.express_namespace.metadata[0].name
+    labels = {
+      app = "${var.module_name}-app"
+    }
+  }
+
+  spec {
+    min_replicas = 1
+    max_replicas = 2
+
+    # Target the deployment created above
+    scale_target_ref {
+      api_version = "apps/v1"
+      kind        = "Deployment"
+      name        = kubernetes_deployment_v1.express_deployment.metadata[0].name
+    }
+
+    # Define scaling metrics (e.g., Target 70% average CPU utilization)
+    metric {
+      type = "Resource"
+      resource {
+        name = "cpu"
+        target {
+          type                = "Utilization"
+          average_utilization = 70
+        }
+      }
+    }
+
+    # Optional: Define memory scaling metric
+    metric {
+      type = "Resource"
+      resource {
+        name = "memory"
+        target {
+          type                = "Utilization"
+          average_utilization = 80
+        }
       }
     }
   }
