@@ -104,3 +104,10 @@ module "observability" {
   domain    = "example.com"
   subdomain = "grafz"
 }
+
+module "ollama" {
+  source              = "./modules/ollama"
+  domain_name         = "example.com"
+  subdomain_name      = "ollama"
+  host_data_directory = "/shares/data"
+}
