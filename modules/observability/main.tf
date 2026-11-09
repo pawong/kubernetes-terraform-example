@@ -2,19 +2,15 @@ resource "kubernetes_ingress_v1" "ingress" {
   metadata {
     name      = "observability-ingress"
     namespace = "observability"
-    annotations = {
-      "cert-manager.io/cluster-issuer" = "lets-encrypt"
-    }
   }
   spec {
-    tls {
-      hosts       = ["${var.subdomain}.${var.domain}"]
-      secret_name = "${var.subdomain}.${var.domain}-tls"
-    }
+    ingress_class_name = "traefik"
     rule {
       host = "${var.subdomain}.${var.domain}"
       http {
         path {
+          path      = "/"
+          path_type = "Prefix"
           backend {
             service {
               name = "kube-prom-stack-grafana"

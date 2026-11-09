@@ -101,13 +101,13 @@ module "dynamodb" {
 
 module "observability" {
   source    = "./modules/observability"
-  domain    = "example.com"
+  domain    = "siona.com"
   subdomain = "grafz"
 }
 
 module "ollama" {
   source              = "./modules/ollama"
-  domain_name         = "example.com"
+  domain_name         = "siona.com"
   subdomain_name      = "ollama"
   host_data_directory = "/shares/data"
 }

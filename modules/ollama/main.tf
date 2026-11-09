@@ -34,23 +34,33 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
       }
       spec {
         container {
+          # Consider pinning a specific version instead of "latest" so upgrades are deliberate
           image             = "ollama/ollama:latest"
           name              = "${var.module_name}-app"
           image_pull_policy = "IfNotPresent"
+
+          security_context {
+            capabilities {
+              drop = ["NET_RAW"]
+              # Alternatively, dropping "ALL" is a security best practice:
+              # drop = ["ALL"]
+            }
+          }
 
           port {
             name           = "http"
             container_port = 11434
           }
 
+          # Sized for qwen3-coder:30b (Q4_K_M, ~19 GB) with a 16k context on a 6-core / 32 GB node.
+          # No CPU limit on purpose: CFS throttling makes token generation slow and jerky.
           resources {
             requests = {
-              memory = "2Gi"
-              cpu    = "2"
+              memory = "22Gi"
+              cpu    = "4"
             }
             limits = {
-              memory = "8Gi"
-              cpu    = "6"
+              memory = "28Gi"
             }
           }
 
@@ -61,7 +71,32 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
 
           env {
             name  = "OLLAMA_KEEP_ALIVE"
-            value = "24h" # Keep loaded models in memory between requests
+            value = "-1" # Keep loaded models in memory between requests
+          }
+
+          env {
+            name  = "OLLAMA_CONTEXT_LENGTH"
+            value = "65536" # Copilot prompts are large; the default context truncates them
+          }
+
+          env {
+            name  = "OLLAMA_NUM_PARALLEL"
+            value = "1" # Each parallel slot allocates its own context memory
+          }
+
+          env {
+            name  = "OLLAMA_MAX_LOADED_MODELS"
+            value = "1" # Switching models unloads the previous one instead of stacking them in RAM
+          }
+
+          env {
+            name  = "OLLAMA_FLASH_ATTENTION"
+            value = "1"
+          }
+
+          env {
+            name  = "OLLAMA_KV_CACHE_TYPE"
+            value = "q8_0" # requires flash attention
           }
 
           # Readiness Probe
@@ -72,10 +107,13 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
             }
             initial_delay_seconds = 5
             period_seconds        = 10
+            timeout_seconds       = 5
             failure_threshold     = 3
           }
 
           # Liveness Probe
+          # Generous timeout: with all cores busy on inference, "/" can answer slowly,
+          # and the default 1s timeout could restart the pod mid-request.
           liveness_probe {
             http_get {
               path = "/"
@@ -83,7 +121,8 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
             }
             initial_delay_seconds = 30
             period_seconds        = 20
-            failure_threshold     = 3
+            timeout_seconds       = 10
+            failure_threshold     = 5
           }
 
           # Pull models once the server is up. Already-downloaded models are skipped quickly,
@@ -139,6 +178,13 @@ resource "kubernetes_ingress_v1" "ollama_ingress" {
   metadata {
     name      = "${var.module_name}-ingress"
     namespace = kubernetes_namespace_v1.ollama.metadata[0].name
+    # ingress-nginx annotations: long CPU-bound requests need more than the 60s default,
+    # and unbuffered responses let tokens stream as they are generated.
+    annotations = {
+      "nginx.ingress.kubernetes.io/proxy-read-timeout" = "600"
+      "nginx.ingress.kubernetes.io/proxy-send-timeout" = "600"
+      "nginx.ingress.kubernetes.io/proxy-buffering"    = "off"
+    }
   }
   spec {
     rule {
