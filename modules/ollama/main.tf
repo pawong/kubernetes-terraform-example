@@ -35,7 +35,7 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
       spec {
         container {
           # Consider pinning a specific version instead of "latest" so upgrades are deliberate
-          image             = "ollama/ollama:v0.40.15"
+          image             = "ollama/ollama:0.40.15"
           name              = "${var.module_name}-app"
           image_pull_policy = "IfNotPresent"
 
