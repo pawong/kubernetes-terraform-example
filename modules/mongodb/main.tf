@@ -1,3 +1,4 @@
+
 resource "kubernetes_namespace_v1" "mongodb" {
   metadata {
     name = var.module_name
@@ -90,34 +91,70 @@ resource "kubernetes_deployment_v1" "mongodb" {
       }
 
       spec {
+        security_context {
+          run_as_non_root = true
+          run_as_user     = 1000
+          run_as_group    = 3000
+          fs_group        = 2000
+        }
+
         container {
           name  = "mongodb"
-          image = "mongo:4.4.29"
+          image = "mongo:8.0"
+
+          command = ["/bin/bash", "-c"]
+
+          args = [
+            "export MONGO_INITDB_ROOT_USERNAME=\"$(cat /run/secrets/mongodb/username)\"; export MONGO_INITDB_ROOT_PASSWORD=\"$(cat /run/secrets/mongodb/password)\"; exec docker-entrypoint.sh mongod"
+          ]
+
+          security_context {
+            allow_privilege_escalation = false
+            read_only_root_filesystem  = true
+            run_as_non_root            = true
+            run_as_user                = 1000
+
+            capabilities {
+              drop = ["ALL"]
+            }
+          }
 
           port {
             container_port = 27017
           }
 
-          env {
-            name = "MONGO_INITDB_ROOT_USERNAME"
-
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret_v1.mongodb.metadata[0].name
-                key  = "MONGO_INITDB_ROOT_USERNAME"
-              }
+          liveness_probe {
+            exec {
+              command = [
+                "mongosh",
+                "--quiet",
+                "--eval",
+                "db.adminCommand('ping')"
+              ]
             }
           }
 
-          env {
-            name = "MONGO_INITDB_ROOT_PASSWORD"
-
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret_v1.mongodb.metadata[0].name
-                key  = "MONGO_INITDB_ROOT_PASSWORD"
-              }
+          readiness_probe {
+            exec {
+              command = [
+                "mongosh",
+                "--quiet",
+                "--eval",
+                "db.adminCommand('ping').ok"
+              ]
             }
+
+            initial_delay_seconds = 10
+            period_seconds        = 10
+            timeout_seconds       = 5
+            success_threshold     = 1
+            failure_threshold     = 3
+          }
+
+          volume_mount {
+            name       = "mongodb-secret"
+            mount_path = "/run/secrets/mongodb"
+            read_only  = true
           }
 
           volume_mount {
@@ -135,6 +172,26 @@ resource "kubernetes_deployment_v1" "mongodb" {
               cpu    = "1"
               memory = "2Gi"
             }
+          }
+        }
+
+        volume {
+          name = "mongodb-secret"
+
+          secret {
+            secret_name = kubernetes_secret_v1.mongodb.metadata[0].name
+
+            items {
+              key  = "MONGO_INITDB_ROOT_USERNAME"
+              path = "username"
+            }
+
+            items {
+              key  = "MONGO_INITDB_ROOT_PASSWORD"
+              path = "password"
+            }
+
+            default_mode = "0440"
           }
         }
 

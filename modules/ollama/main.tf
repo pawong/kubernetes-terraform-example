@@ -35,15 +35,16 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
       spec {
         container {
           # Consider pinning a specific version instead of "latest" so upgrades are deliberate
-          image             = "ollama/ollama:latest"
+          image             = "ollama/ollama:v0.40.15"
           name              = "${var.module_name}-app"
           image_pull_policy = "IfNotPresent"
 
           security_context {
+            read_only_root_filesystem = true
             capabilities {
-              drop = ["NET_RAW"]
+              # drop = ["NET_RAW"]
               # Alternatively, dropping "ALL" is a security best practice:
-              # drop = ["ALL"]
+              drop = ["ALL"]
             }
           }
 
@@ -60,7 +61,8 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
               cpu    = "4"
             }
             limits = {
-              memory = "28Gi"
+              memory = "28Gi",
+              cpu    = "10"
             }
           }
 
