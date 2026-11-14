@@ -86,10 +86,10 @@ module "dynamodb" {
   subdomain = "dynamodb"
 }
 
-#module "mongodb" {
-#  source         = "./modules/mongodb"
-#  mongo_password = var.mongodb_password
-#}
+module "mongodb" {
+  source         = "./modules/mongodb"
+  mongo_password = var.mongodb_password
+}
 
 #module "couchbase" {
 #  source              = "./modules/couchbase"

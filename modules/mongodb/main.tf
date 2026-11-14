@@ -99,7 +99,7 @@ resource "kubernetes_deployment_v1" "mongodb" {
 
         container {
           name  = "mongodb"
-          image = "mongo:8.0"
+          image = "mongo:latest"
 
           command = ["/bin/bash", "-c"]
 
@@ -109,7 +109,6 @@ resource "kubernetes_deployment_v1" "mongodb" {
 
           security_context {
             allow_privilege_escalation = false
-            read_only_root_filesystem  = true
             run_as_non_root            = true
             run_as_user                = 1000
 
