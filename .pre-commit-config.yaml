@@ -26,3 +26,7 @@ repos:
   #- id: no-go-testing
   #- id: golangci-lint
   #- id: go-unit-tests
+- repo: https://github.com/trufflesecurity/trufflehog
+  rev: v3.99.9 # Replace with the latest release tag
+  hooks:
+    - id: trufflehog
