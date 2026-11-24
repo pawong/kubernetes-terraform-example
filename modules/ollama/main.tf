@@ -57,12 +57,12 @@ resource "kubernetes_deployment_v1" "ollama_deployment" {
           # No CPU limit on purpose: CFS throttling makes token generation slow and jerky.
           resources {
             requests = {
-              memory = "22Gi"
-              cpu    = "4"
+              memory = "12Gi"
+              cpu    = "2"
             }
             limits = {
-              memory = "28Gi",
-              cpu    = "10"
+              memory = "24Gi",
+              cpu    = "8"
             }
           }
 

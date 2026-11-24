@@ -12,92 +12,80 @@ data "external" "git" {
 
 ## Examples
 
-module "postgresql" {
-  source               = "./modules/postgresql"
-  kubernetes_namespace = "postgresql"
-  postgresql_password  = var.postgresql_password
-}
+# module "couchbase" {
+#   source              = "./modules/couchbase"
+#   domain_name         = "example.com"
+#   subdomain_name      = "couchbase"
+#   host_data_directory = "/shares/data"
+#   couchbase_password  = var.couchbase_password
+# }
 
-module "nginx_example" {
-  source              = "./modules/nginx-example"
-  domain_name         = "example.com"
-  subdomain_name      = "nginx"
-  host_data_directory = "/shares/data"
-}
+# module "cronjobs" {
+#   source      = "./modules/cronjobs"
+#   module_name = "cronjobs"
+# }
 
-module "ingress_example" {
-  source              = "./modules/ingress-example"
-  domain_name         = "example.com"
-  subdomain_name      = "ingress"
-  host_data_directory = "/shares/data"
-}
+# module "debug_pod" {
+#   source              = "./modules/debug-pod"
+#   host_data_directory = "/shares/data"
+# }
 
-module "kotlin_example" {
-  source              = "./modules/kotlin-example"
-  domain_name         = "example.com"
-  subdomain_name      = "kotlin"
-  host_data_directory = "/shares/data"
-  GIT_HASH            = data.external.git.result.GIT_HASH
-}
+# module "dynamodb" {
+#   source    = "./modules/dynamodb"
+#   domain    = "example.com"
+#   subdomain = "dynamodb"
+# }
 
-module "express_example" {
-  source              = "./modules/express-example"
-  domain_name         = "example.com"
-  subdomain_name      = "express"
-  host_data_directory = "/shares/data"
-  GIT_HASH            = data.external.git.result.GIT_HASH
-}
+# module "express_example" {
+#   source              = "./modules/express-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "express"
+#   host_data_directory = "/shares/data"
+#   GIT_HASH            = data.external.git.result.GIT_HASH
+# }
 
-module "fastapi_example" {
-  source              = "./modules/fastapi-example"
-  domain_name         = "example.com"
-  subdomain_name      = "fastapi"
-  host_data_directory = "/shares/data"
-  GIT_HASH            = data.external.git.result.GIT_HASH
-}
+# module "fastapi_example" {
+#   source              = "./modules/fastapi-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "fastapi"
+#   host_data_directory = "/shares/data"
+#   GIT_HASH            = data.external.git.result.GIT_HASH
+# }
 
-module "go_example" {
-  source              = "./modules/go-example"
-  domain_name         = "example.com"
-  subdomain_name      = "go"
-  host_data_directory = "/shares/data"
-  GIT_HASH            = data.external.git.result.GIT_HASH
-}
+# module "go_example" {
+#   source              = "./modules/go-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "go"
+#   host_data_directory = "/shares/data"
+#   GIT_HASH            = data.external.git.result.GIT_HASH
+# }
 
-#module "debug_pod" {
-#  source              = "./modules/debug-pod"
-#  host_data_directory = "/shares/data"
-#}
+# module "ingress_example" {
+#   source              = "./modules/ingress-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "ingress"
+#   host_data_directory = "/shares/data"
+# }
 
-module "cronjobs" {
-  source      = "./modules/cronjobs"
-  module_name = "cronjobs"
-}
-
-#module "portainer" {
-#  source         = "./modules/portainer"
-#  domain_name    = "example.com"
-#  subdomain_name = "portainer"
-#}
-
-module "dynamodb" {
-  source    = "./modules/dynamodb"
-  domain    = "example.com"
-  subdomain = "dynamodb"
-}
+# module "kotlin_example" {
+#   source              = "./modules/kotlin-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "kotlin"
+#   host_data_directory = "/shares/data"
+#   GIT_HASH            = data.external.git.result.GIT_HASH
+# }
 
 module "mongodb" {
   source         = "./modules/mongodb"
   mongo_password = var.mongodb_password
 }
 
-#module "couchbase" {
-#  source              = "./modules/couchbase"
-#  domain_name         = "example.com"
-#  subdomain_name      = "couchbase"
-#  host_data_directory = "/shares/data"
-#  couchbase_password  = var.couchbase_password
-#}
+# module "nginx_example" {
+#   source              = "./modules/nginx-example"
+#   domain_name         = "example.com"
+#   subdomain_name      = "nginx"
+#   host_data_directory = "/shares/data"
+# }
 
 module "observability" {
   source    = "./modules/observability"
@@ -111,3 +99,15 @@ module "ollama" {
   subdomain_name      = "ollama"
   host_data_directory = "/shares/data"
 }
+
+# module "portainer" {
+#   source         = "./modules/portainer"
+#  domain_name    = "example.com"
+#   subdomain_name = "portainer"
+# }
+
+# module "postgresql" {
+#   source               = "./modules/postgresql"
+#   kubernetes_namespace = "postgresql"
+#   postgresql_password  = var.postgresql_password
+# }
