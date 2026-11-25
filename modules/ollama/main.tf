@@ -171,8 +171,11 @@ resource "kubernetes_service_v1" "ollama_service" {
     }
     port {
       port        = 11434
-      target_port = "http"
+      target_port = 11434
+      protocol    = "TCP"
+      node_port   = 31434
     }
+    type = "NodePort"
   }
 }
 

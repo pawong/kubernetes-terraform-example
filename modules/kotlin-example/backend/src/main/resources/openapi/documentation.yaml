@@ -4,7 +4,7 @@ info:
   description: "An example API in Kotlin/Ktor"
   version: "1.0.0"
 servers:
-  - url: "http://kotlin.example.com"
+  - url: "http://kotlin.jessica.com"
   - url: "http://0.0.0.0"
 paths:
   /:

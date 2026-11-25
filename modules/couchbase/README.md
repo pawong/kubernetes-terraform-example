@@ -34,16 +34,16 @@ skipped if the cluster/bucket already exists, so re-applying is safe.
 
 ## Endpoints
 
-| Service | Port  | NodePort |
-| ------- | ----- | -------- |
-| Admin / REST / Web UI | 8091 | 30891 |
-| Views | 8092 | 30892 |
-| Query (N1QL) | 8093 | 30893 |
-| Search | 8094 | 30894 |
-| Data (KV) | 11210 | 31210 |
+| Service               | Port  | NodePort |
+| --------------------- | ----- | -------- |
+| Admin / REST / Web UI | 8091  | 30891    |
+| Views                 | 8092  | 30892    |
+| Query (N1QL)          | 8093  | 30893    |
+| Search                | 8094  | 30894    |
+| Data (KV)             | 11210 | 31210    |
 
 The Web UI is also exposed through an ingress at
-`<subdomain_name>.<domain_name>` (default `couchbase.example.com`).
+`<subdomain_name>.<domain_name>` (default `couchbase.jessica.com`).
 
 In-cluster connection string: `couchbase://couchbase.couchbase.svc.cluster.local`
 

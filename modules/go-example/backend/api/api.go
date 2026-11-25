@@ -19,7 +19,7 @@ import (
 // @title           Magic 8 Ball API
 // @version         1.0
 // @description     A simple Magic 8 Ball REST API.
-// @host            go.example.com
+// @host            go.jessica.com
 // @BasePath        /
 func main() {
 	router := gin.Default()

@@ -9,15 +9,18 @@ provider "docker" {
 }
 
 resource "docker_image" "fastapi_example_image" {
-  name = "${var.module_name}-image"
+  name = "${var.docker_registry}/library/${var.module_name}-image:latest"
+
   build {
     context = "${path.module}/backend"
-    tag     = ["${var.module_name}-image:latest"]
+    tag = [
+      "${var.docker_registry}/library/${var.module_name}-image:latest"
+    ]
     build_args = {
-      GIT_HASH : var.GIT_HASH
+      GIT_HASH = var.GIT_HASH
     }
     label = {
-      author : "me@example.com"
+      author = "me@jessica.com"
     }
   }
 }
@@ -45,7 +48,7 @@ resource "kubernetes_deployment_v1" "fastapi_deployment" {
       }
       spec {
         container {
-          image             = "${docker_image.fastapi_example_image.name}:latest"
+          image             = docker_image.fastapi_example_image.name
           name              = "${var.module_name}-container"
           image_pull_policy = "IfNotPresent"
 

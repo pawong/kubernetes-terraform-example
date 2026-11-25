@@ -14,4 +14,4 @@ Enable Portainer on Microk8s
 
 Create the ingress to port 30779
 
-Adding a default backend to the ingress will force anythin like `portainer.example.com` to that service.
+Adding a default backend to the ingress will force anythin like `portainer.jessica.com` to that service.

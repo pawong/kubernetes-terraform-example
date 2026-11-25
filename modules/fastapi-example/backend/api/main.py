@@ -1,14 +1,42 @@
 import socket
 import os
 import time
+import asyncio
 
+from contextlib import asynccontextmanager
 from typing import Union
 
-from fastapi import FastAPI, APIRouter
+import aiohttp
+
+from fastapi import FastAPI, APIRouter, Request
 
 from api import eight_ball
 
-api = FastAPI()
+
+@asynccontextmanager
+async def lifespan(api: FastAPI):
+
+    connector = aiohttp.TCPConnector(
+        limit=100,
+        limit_per_host=100,
+        keepalive_timeout=30,
+    )
+
+    timeout = aiohttp.ClientTimeout(total=10)
+
+    api.state.http = aiohttp.ClientSession(
+        connector=connector,
+        timeout=timeout,
+    )
+
+    api.state.request_semaphore = asyncio.Semaphore(100)
+
+    yield
+
+    await api.state.http.close()
+
+
+api = FastAPI(lifespan=lifespan)
 router = APIRouter()
 
 
@@ -37,5 +65,24 @@ def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 
-router.include_router(eight_ball.router, prefix="/8ball", tags=["eight_ball"])
+@api.get("/google")
+async def google(request: Request):
+
+    async with request.app.state.request_semaphore:
+
+        async with request.app.state.http.get("https://www.google.com") as response:
+
+            return {
+                "status_code": response.status,
+                "url": str(response.url),
+                "response": (await response.text())[:500],
+            }
+
+
+router.include_router(
+    eight_ball.router,
+    prefix="/8ball",
+    tags=["eight_ball"],
+)
+
 api.include_router(router)

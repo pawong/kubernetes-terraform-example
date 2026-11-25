@@ -37,18 +37,18 @@ inside the running server (`ALTER USER` / `db.changeUserPassword`) and keep the 
 
 ## Host File
 
-Add `example.com` to your host file.
+Add `jessica.com` to your host file.
 
 ```bash
-192.168.10.xx   example.com
-192.168.10.xx   ingress.example.com
-192.168.10.xx   nginx.example.com
-192.168.10.xx   fastapi.example.com
-192.168.10.xx   express.example.com
-192.168.10.xx   kotlin.example.com
-192.168.10.xx   go.example.com
-192.168.10.xx   couchbase.example.com
-192.168.10.xx   portainer.example.com
+192.168.10.xx   jessica.com
+192.168.10.xx   ingress.jessica.com
+192.168.10.xx   nginx.jessica.com
+192.168.10.xx   fastapi.jessica.com
+192.168.10.xx   express.jessica.com
+192.168.10.xx   kotlin.jessica.com
+192.168.10.xx   go.jessica.com
+192.168.10.xx   couchbase.jessica.com
+192.168.10.xx   portainer.jessica.com
 ```
 
 ## URLs
@@ -60,14 +60,14 @@ are the defaults. Everything is plain HTTP - no ingress declares a `tls` block.
 
 | Site             | URL                                                                     | Service port |
 | ---------------- | ----------------------------------------------------------------------- | ------------ |
-| nginx            | <http://nginx.example.com>                                              | 8080         |
-| ingress example  | <http://ingress.example.com/apple>, <http://ingress.example.com/banana> | 5678         |
-| FastAPI example  | <http://fastapi.example.com>                                            | 8080         |
-| Express example  | <http://express.example.com>                                            | 3000         |
-| Kotlin example   | <http://kotlin.example.com>                                             | 8080         |
-| Go example       | <http://go.example.com>                                                 | 8080         |
-| Couchbase Web UI | <http://couchbase.example.com>                                          | 8091         |
-| Portainer        | <http://portainer.example.com>                                          | 9000         |
+| nginx            | <http://nginx.jessica.com>                                              | 8080         |
+| ingress example  | <http://ingress.jessica.com/apple>, <http://ingress.jessica.com/banana> | 5678         |
+| FastAPI example  | <http://fastapi.jessica.com>                                            | 8080         |
+| Express example  | <http://express.jessica.com>                                            | 3000         |
+| Kotlin example   | <http://kotlin.jessica.com>                                             | 8080         |
+| Go example       | <http://go.jessica.com>                                                 | 8080         |
+| Couchbase Web UI | <http://couchbase.jessica.com>                                          | 8091         |
+| Portainer        | <http://portainer.jessica.com>                                          | 9000         |
 
 The four language examples also answer on `/health`, which is what their readiness and liveness
 probes hit.

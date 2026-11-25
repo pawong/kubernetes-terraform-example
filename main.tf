@@ -2,8 +2,13 @@ provider "kubernetes" {
   config_path = "~/.kube/config"
 }
 
-## Data/Resource
+variable "docker_registry" {
+  description = "Local Docker registry"
+  type        = string
+  default     = "192.168.10.52:32000"
+}
 
+## Data/Resource
 resource "terraform_data" "domain_name" {
   input = "jessica.com"
 }
@@ -49,13 +54,14 @@ data "external" "git" {
 #   GIT_HASH            = data.external.git.result.GIT_HASH
 # }
 
-# module "fastapi_example" {
-#   source              = "./modules/fastapi-example"
-#   domain_name         = terraform_data.domain_name.output
-#   subdomain_name      = "fastapi"
-#   host_data_directory = "/shares/data"
-#   GIT_HASH            = data.external.git.result.GIT_HASH
-# }
+module "fastapi_example" {
+  source              = "./modules/fastapi-example"
+  domain_name         = terraform_data.domain_name.output
+  subdomain_name      = "fastapi"
+  host_data_directory = "/shares/data"
+  GIT_HASH            = data.external.git.result.GIT_HASH
+  docker_registry     = var.docker_registry
+}
 
 # module "go_example" {
 #   source              = "./modules/go-example"

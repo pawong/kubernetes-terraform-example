@@ -12,7 +12,7 @@ variable "domain_name" {
   sensitive   = false
   type        = string
   description = "Domain Name"
-  default     = "example.com"
+  default     = "jessica.com"
 }
 
 variable "subdomain_name" {

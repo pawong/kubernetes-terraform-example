@@ -17,7 +17,7 @@ resource "docker_image" "go_example_image" {
       GIT_HASH : var.GIT_HASH
     }
     label = {
-      author : "me@example.com"
+      author : "me@jessica.com"
     }
   }
 }

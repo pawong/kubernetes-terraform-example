@@ -12,7 +12,7 @@ variable "domain_name" {
   sensitive   = false
   type        = string
   description = "Domain Name"
-  default     = "example.com"
+  default     = "jessica.com"
 }
 
 variable "subdomain_name" {
@@ -34,4 +34,9 @@ variable "GIT_HASH" {
   type        = string
   description = "Git commit hash"
   default     = "None"
+}
+
+variable "docker_registry" {
+  description = "Docker registry address"
+  type        = string
 }
